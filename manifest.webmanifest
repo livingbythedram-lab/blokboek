@@ -1,0 +1,30 @@
+{
+  "id": "./",
+  "name": "Blokboek",
+  "short_name": "Blokboek",
+  "description": "Study with short lessons, practice exercises, quizzes and flashcards, also offline.",
+  "lang": "en",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FFF3F9",
+  "theme_color": "#FFF3F9",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

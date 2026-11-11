@@ -1,0 +1,2906 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Blokboek</title>
+<meta name="description" content="Study with short lessons, practice exercises, quizzes and flashcards, also offline.">
+<meta name="theme-color" content="#FFF3F9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1A1128" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Blokboek">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style id="bb-style">
+:root{
+  --paper:#FFF3F9; --dot:#F7D3E6; --sheet:#FFFFFF;
+  --ink:#2B1B3D; --ink-2:#5C4870; --ink-3:#8C7AA0;
+  --line:#2B1B3D; --rule:#EEDCEB; --rule-soft:#FBEFF6;
+  --pink:#FF6FAE; --pink-soft:#FFDAEB;
+  --yellow:#FFD23F; --yellow-soft:#FFF0B3;
+  --blue:#4CC3FF; --blue-soft:#D8F2FF;
+  --purple:#9B6BFF; --purple-soft:#EBE1FF;
+  --good:#0B8A5F; --good-fill:#3DDC97; --good-bg:#D3F7E8;
+  --bad:#D92D4B; --bad-fill:#FF6B7F; --bad-bg:#FFE1E6;
+  --marker:var(--yellow-soft); --marker-solid:var(--yellow); --card-margin:var(--pink);
+  --focus:#3B82F6; --btn-ink:#2B1B3D;
+  --bw:3px; --shadow:4px 4px 0 var(--line); --shadow-sm:3px 3px 0 var(--line);
+  --font-ui:"Nunito","Segoe UI Rounded","Segoe UI",system-ui,-apple-system,sans-serif;
+  --font-display:"Lilita One","Arial Rounded MT Bold","Segoe UI",system-ui,sans-serif;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#1A1128; --dot:#2D2042; --sheet:#2A1E3E; --ink:#FFF1F8; --ink-2:#DCCAEA; --ink-3:#A893BD;
+    --line:#09040F; --rule:#3E2F55; --rule-soft:#33254A;
+    --pink-soft:#5B2A49; --yellow-soft:#5A4813; --blue-soft:#173F56; --purple-soft:#3B2B66;
+    --good:#5BE3A8; --good-bg:#123D2E; --bad:#FF8597; --bad-bg:#4A1A26; --focus:#8AB4FF;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#1A1128; --dot:#2D2042; --sheet:#2A1E3E; --ink:#FFF1F8; --ink-2:#DCCAEA; --ink-3:#A893BD;
+  --line:#09040F; --rule:#3E2F55; --rule-soft:#33254A;
+  --pink-soft:#5B2A49; --yellow-soft:#5A4813; --blue-soft:#173F56; --purple-soft:#3B2B66;
+  --good:#5BE3A8; --good-bg:#123D2E; --bad:#FF8597; --bad-bg:#4A1A26; --focus:#8AB4FF;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+body{margin:0;background-color:var(--paper);background-image:radial-gradient(circle,var(--dot) 1.4px,transparent 1.7px);background-size:22px 22px;color:var(--ink);font-family:var(--font-ui);font-size:16px;line-height:1.5}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+h1,h2,h3,h4{line-height:1.15;margin:0;font-family:var(--font-display);font-weight:400;letter-spacing:.01em}
+p{margin:0}
+.muted{color:var(--ink-2)}
+.small{font-size:.875rem}
+.center{text-align:center}
+.hl{background:linear-gradient(transparent 55%,var(--yellow) 55%,var(--yellow) 92%,transparent 92%);-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 .12em;margin:0 -.12em}
+[data-theme="dark"] .hl,:root:not([data-theme="light"]) .hl{color:inherit}
+
+/* layout */
+.app{display:grid;grid-template-columns:250px minmax(0,1fr);max-width:1260px;margin:0 auto}
+.side{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:26px 16px 28px 22px;display:flex;flex-direction:column;gap:18px;max-height:100dvh;overflow:auto}
+.brand{align-self:flex-start;font-family:var(--font-display);font-size:1.75rem;line-height:1.1;background:var(--yellow);color:#2B1B3D;border:var(--bw) solid var(--line);border-radius:14px;padding:4px 14px 6px;box-shadow:var(--shadow-sm);transform:rotate(-3deg);margin:4px 0 0 2px}
+.side-buddy{display:flex;align-items:center;gap:8px}
+.side-buddy .chip{font-weight:800;font-size:.85rem}
+.side-label{font-size:.85rem;color:var(--ink-2);font-weight:800;margin-bottom:8px}
+.courses{display:flex;flex-direction:column;gap:8px}
+.course-link{display:block;width:100%;text-align:left;background:var(--sheet);border:2.5px solid var(--line);border-radius:14px;padding:8px 12px;font:inherit;color:var(--ink);cursor:pointer;box-shadow:2px 2px 0 var(--line)}
+.course-link:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--line)}
+.course-link .nm{font-weight:800;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.course-link .sub{display:block;font-size:.8rem;color:var(--ink-2);font-weight:600}
+.course-link[aria-current="true"]{background:var(--pink-soft)}
+.store-note{font-size:.8rem;color:var(--ink-2);line-height:1.4}
+.main{padding:26px 28px 72px;min-width:0}
+
+/* buttons & chips */
+.btn{font:inherit;font-weight:800;border-radius:14px;padding:10px 18px;border:var(--bw) solid var(--line);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;line-height:1.2;text-align:center;color:var(--ink);background:var(--sheet);box-shadow:var(--shadow-sm);transition:transform .07s,box-shadow .07s}
+.btn:hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--line)}
+.btn:active:not(:disabled){transform:translate(3px,3px);box-shadow:0 0 0 var(--line)}
+.btn.primary{background:var(--pink);color:#2B1B3D}
+.btn.danger{color:var(--bad);margin-right:auto}
+.btn.small{padding:6px 12px;font-size:.88rem;border-width:2.5px;border-radius:12px;box-shadow:2px 2px 0 var(--line)}
+.btn.small:hover:not(:disabled){box-shadow:3px 3px 0 var(--line)}
+.btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
+.link{background:none;border:0;padding:0;font:inherit;font-weight:800;color:var(--ink);text-decoration:underline;text-decoration-color:var(--pink);text-decoration-thickness:3px;text-underline-offset:4px;cursor:pointer;text-align:left}
+.link:hover{text-decoration-color:var(--ink)}
+.chip{display:inline-block;background:var(--sheet);border:2.5px solid var(--line);border-radius:999px;padding:2px 12px;font-weight:700;box-shadow:2px 2px 0 var(--line)}
+kbd{font-family:var(--font-ui);font-size:.72rem;border:2px solid currentColor;border-radius:6px;padding:0 5px;opacity:.7;margin-left:6px;font-weight:800}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+
+.banner{background:var(--yellow-soft);border:var(--bw) solid var(--line);border-radius:16px;padding:12px 16px;margin-bottom:20px;font-weight:600;box-shadow:var(--shadow-sm)}
+
+/* mascot & bubble */
+.mascot{flex:none;display:block;overflow:visible}
+.mascot.cheer{animation:hop .7s ease-out}
+.mascot.sad{animation:tilt .7s ease-in-out}
+@keyframes hop{0%,100%{transform:none}30%{transform:translateY(-12px)}55%{transform:none}75%{transform:translateY(-5px)}}
+@keyframes tilt{0%,100%{transform:none}30%{transform:rotate(-6deg)}65%{transform:rotate(4deg)}}
+.buddy{display:flex;align-items:center;gap:12px}
+.bubble{position:relative;background:var(--sheet);border:2.5px solid var(--line);border-radius:18px;padding:10px 15px;font-weight:700;box-shadow:var(--shadow-sm);max-width:38ch;line-height:1.4}
+.bubble::before{content:"";position:absolute;left:-9px;top:50%;width:14px;height:14px;margin-top:-7px;background:var(--sheet);border-left:2.5px solid var(--line);border-bottom:2.5px solid var(--line);transform:rotate(45deg)}
+
+/* course header & tabs */
+.course-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:18px}
+.course-head h1{font-size:clamp(2rem,4.2vw,2.8rem)}
+.exam-line{display:inline-block;margin-top:10px;background:var(--blue-soft);border:2.5px solid var(--line);border-radius:14px;padding:2px 14px;font-weight:700;font-size:.92rem}
+.tabs{display:flex;gap:10px;overflow-x:auto;padding:4px 6px 12px 2px;margin-bottom:16px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{border:2.5px solid var(--line);background:var(--sheet);padding:8px 16px;font:inherit;font-weight:800;color:var(--ink);cursor:pointer;white-space:nowrap;display:flex;gap:6px;align-items:center;border-radius:999px;box-shadow:2px 2px 0 var(--line);flex:none}
+.tab:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--line)}
+.tab[aria-current="page"]{background:var(--yellow);color:#2B1B3D}
+.badge{font-size:.72rem;background:var(--pink);color:#2B1B3D;border:2px solid var(--line);border-radius:999px;padding:0 7px;font-weight:900}
+
+.panel{max-width:840px}
+.panel h2{font-size:1.75rem;margin-bottom:10px}
+.panel h3{font-size:1.25rem}
+
+.busy{display:flex;gap:16px;align-items:center;padding:16px 18px;border:var(--bw) solid var(--line);border-radius:18px;margin-bottom:20px;background:var(--sheet);box-shadow:var(--shadow)}
+.busy div{flex:1}
+.busy p{color:var(--ink-2);font-size:.92rem}
+.pulse{display:flex;gap:6px}
+.pulse i{width:12px;height:12px;border-radius:50%;border:2px solid var(--line);background:var(--pink);animation:pulse 1.2s infinite ease-in-out}
+.pulse i:nth-child(2){background:var(--yellow);animation-delay:.15s}.pulse i:nth-child(3){background:var(--blue);animation-delay:.3s}
+@keyframes pulse{0%,80%,100%{transform:scale(.65)}40%{transform:scale(1.05)}}
+
+.empty{padding:26px 0;max-width:600px;display:flex;gap:20px;align-items:flex-start}
+.empty h2{margin-bottom:8px}
+.empty p{color:var(--ink-2);margin-bottom:18px}
+
+/* sticker sheets (cards) */
+.index-card{background:var(--sheet);border:var(--bw) solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}
+.card-head{padding:14px 20px;background:var(--blue-soft);border-bottom:var(--bw) solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.card-body{padding:18px 20px 20px;line-height:1.6}
+.card-body ol,.card-body ul{margin:0;padding-left:1.3em}
+.card-body li{margin:4px 0}
+.card-body > * + *{margin-top:10px}
+
+.welcome{max-width:660px;padding-top:14px}
+.welcome .buddy{margin-bottom:22px}
+.welcome .card-head{background:var(--pink-soft)}
+.welcome .card-head h1{font-size:clamp(1.9rem,4.6vw,2.7rem);padding:6px 0}
+.welcome .card-body{font-size:1.06rem}
+.welcome .card-body .row{padding-top:8px}
+.welcome-foot{margin-top:18px;color:var(--ink-2);font-size:.9rem;font-weight:600}
+
+/* plan */
+.overview{font-size:1.06rem;line-height:1.7;color:var(--ink-2);max-width:66ch;margin-bottom:22px;font-weight:600}
+.today{margin-bottom:30px}
+.today .card-head{background:var(--yellow-soft)}
+.today .card-head h2{font-size:1.4rem;margin:0}
+.today select,.goal-card select{width:auto;padding:4px 8px;margin-left:6px;border-width:2px}
+.unit{margin-top:32px}
+.unit-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.unit-head h3{font-size:1.35rem}
+.unit-head .num{display:inline-block;font-family:var(--font-ui);font-weight:800;font-size:.8rem;background:var(--purple-soft);border:2px solid var(--line);border-radius:999px;padding:1px 10px;margin:0 0 6px;letter-spacing:0}
+.unit-head h3 .num{display:table}
+.lessons{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.lrow{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:12px;align-items:center;width:100%;text-align:left;background:var(--sheet);border:2.5px solid var(--line);border-radius:16px;padding:12px 14px;font:inherit;color:inherit;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .07s,box-shadow .07s}
+.lrow:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--line)}
+.dot{width:28px;height:28px;border-radius:50%;border:2.5px solid var(--line);display:grid;place-items:center;font-size:14px;font-weight:900;line-height:1;background:var(--sheet)}
+.dot.done{background:var(--good-fill);color:#2B1B3D}
+.lrow .t{font-weight:800;display:block}
+.lrow .g{color:var(--ink-2);font-size:.9rem;display:block}
+.lrow .d{color:var(--ink-2);font-size:.82rem;font-weight:700;white-space:nowrap}
+.lrow .d.now{background:var(--yellow);color:#2B1B3D;border:2px solid var(--line);border-radius:999px;padding:1px 9px}
+.plan-foot{margin-top:28px}
+
+/* lesson */
+.lesson .back{margin-bottom:22px}
+.kicker{display:inline-block;color:var(--ink);font-weight:800;font-size:.85rem;margin-bottom:10px;background:var(--purple-soft);border:2px solid var(--line);border-radius:999px;padding:1px 12px}
+.lesson-title{font-size:clamp(1.8rem,3.6vw,2.5rem);margin-bottom:12px}
+.goal{color:var(--ink-2);margin-bottom:24px;max-width:66ch;font-weight:700}
+.reading{font-size:1.08rem;line-height:1.75;max-width:68ch;background:var(--sheet);border:var(--bw) solid var(--line);border-radius:20px;padding:22px 26px;box-shadow:var(--shadow)}
+.reading p{margin:0 0 1em}
+.reading h3{font-size:1.35rem;margin:1.4em 0 .5em}
+.reading h3:first-child{margin-top:0}
+.reading h4{font-size:1.15rem;margin:1.2em 0 .4em}
+.reading ul,.reading ol{padding-left:1.3em;margin:0 0 1em}
+.reading li{margin:.3em 0}
+.reading blockquote{margin:0 0 1em;padding:8px 14px;border-left:5px solid var(--pink);background:var(--pink-soft);border-radius:0 12px 12px 0}
+.reading code{font-size:.9em;background:var(--rule-soft);padding:1px 5px;border-radius:6px}
+.reading strong{font-weight:800;background:linear-gradient(transparent 60%,var(--yellow-soft) 60%)}
+.reading:empty{display:none}
+.src{font-family:var(--font-ui);font-size:.72rem;font-weight:800;border:2px solid var(--line);background:var(--blue-soft);color:var(--ink);border-radius:999px;padding:0 8px;margin:0 2px;cursor:pointer;vertical-align:2px;line-height:1.6;white-space:nowrap}
+.src:hover{background:var(--yellow)}
+.lesson-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:28px}
+.done-tag{font-weight:800;background:var(--good-fill);color:#2B1B3D;border:2.5px solid var(--line);border-radius:999px;padding:4px 14px}
+.empty-inline{border:3px dashed var(--ink-3);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:12px;align-items:flex-start;background:var(--sheet)}
+
+/* forms */
+label.f{display:block;font-weight:800;margin:14px 0 6px}
+input,select,textarea{font:inherit;width:100%;padding:10px 12px;border:2.5px solid var(--line);border-radius:12px;background:var(--sheet);color:var(--ink)}
+textarea{resize:vertical;min-height:140px}
+.opt-t{font-weight:600;color:var(--ink-2)}
+.form-row{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:14px;margin:16px 0 18px}
+
+/* quiz */
+.quiz-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;font-weight:800}
+.bar{height:18px;background:var(--sheet);border:2.5px solid var(--line);border-radius:999px;overflow:hidden}
+.bar>i{display:block;height:100%;background-color:var(--pink);background-image:repeating-linear-gradient(-45deg,rgba(255,255,255,.35) 0 7px,transparent 7px 14px);border-right:2.5px solid var(--line);border-radius:999px;transition:width .35s}
+.bar>i[style*="width:0%"]{border-right:0}
+.question{font-size:clamp(1.4rem,2.8vw,1.8rem);margin:24px 0 18px;max-width:38ch}
+.opts{display:flex;flex-direction:column;gap:12px;max-width:640px}
+.opt{display:flex;gap:14px;align-items:center;text-align:left;width:100%;padding:12px 16px;border:2.5px solid var(--line);border-radius:16px;background:var(--sheet);font:inherit;font-weight:700;color:inherit;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .07s,box-shadow .07s}
+.opt:hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--line)}
+.opt:disabled{cursor:default}
+.opt .k{flex:none;width:30px;height:30px;display:grid;place-items:center;font-weight:900;font-size:.9rem;border:2.5px solid var(--line);border-radius:9px;background:var(--rule-soft)}
+.opt.sel{background:var(--yellow-soft)}
+.opt.sel .k{background:var(--yellow);color:#2B1B3D}
+.opt.correct{background:var(--good-bg)}
+.opt.correct .k{background:var(--good-fill);color:#2B1B3D}
+.opt.wrong{background:var(--bad-bg)}
+.opt.wrong .k{background:var(--bad-fill);color:#2B1B3D}
+.feedback{margin:18px 0;padding:14px 16px;border-radius:16px;max-width:640px;line-height:1.6;border:2.5px solid var(--line);box-shadow:var(--shadow-sm)}
+.feedback.good{background:var(--good-bg)}
+.feedback.bad{background:var(--bad-bg)}
+.quiz .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.quiz-result .buddy{margin-bottom:18px}
+.review-list{padding-left:1.2em;max-width:680px}
+.review-list li{margin-bottom:18px}
+.review-list .rq{font-weight:800;margin-bottom:4px}
+.good-t{color:var(--good);font-weight:900}.bad-t{color:var(--bad);font-weight:900}
+.hist{width:100%;border-collapse:separate;border-spacing:0;font-size:.92rem;margin-top:12px;background:var(--sheet);border:2.5px solid var(--line);border-radius:14px;overflow:hidden}
+.hist th,.hist td{text-align:left;padding:9px 12px;border-bottom:2px solid var(--rule)}
+.hist tr:last-child td{border-bottom:0}
+.hist th{background:var(--purple-soft);font-weight:800;border-bottom:2.5px solid var(--line)}
+.hist td:last-child,.hist th:last-child{text-align:right}
+
+/* flashcards */
+.review{max-width:620px}
+.fc{display:block;width:100%;padding:0;border:0;background:none;font:inherit;color:inherit;cursor:pointer;perspective:1400px;margin:16px 0 18px;text-align:center}
+.fc-inner{display:grid;transition:transform .5s cubic-bezier(.3,.7,.3,1);transform-style:preserve-3d}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-face{grid-area:1/1;position:relative;-webkit-backface-visibility:hidden;backface-visibility:hidden;min-height:260px;border:var(--bw) solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:52px 28px 32px;display:grid;place-items:center;background:var(--pink-soft)}
+.fc-front .fc-text{font-family:var(--font-display);font-size:1.6rem;line-height:1.25}
+.fc-back{transform:rotateY(180deg);background:var(--blue-soft)}
+.fc-back .fc-text{font-size:1.15rem;font-weight:700;line-height:1.55}
+.fc-side{position:absolute;top:14px;left:16px;font-size:.78rem;font-weight:800;background:var(--sheet);border:2px solid var(--line);border-radius:999px;padding:0 10px;line-height:1.6}
+.rate{display:flex;flex-direction:column;gap:12px;align-items:center}
+.gen{margin-top:30px;padding:20px;background:var(--sheet);border:var(--bw) solid var(--line);border-radius:20px;box-shadow:var(--shadow)}
+.gen .row{margin-top:14px}
+.gen select{max-width:420px}
+.all-cards{margin-top:26px;background:var(--sheet);border:2.5px solid var(--line);border-radius:16px;padding:12px 16px}
+.all-cards summary{cursor:pointer;font-weight:800}
+.all-cards ul{list-style:none;padding:0;margin:12px 0 0}
+.all-cards li{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;padding:12px 0;border-top:2px dashed var(--rule)}
+.all-cards li p{color:var(--ink-2);font-size:.92rem}
+.review-done .buddy{margin-bottom:18px}
+
+/* progress & album */
+.summary{font-size:1.15rem;line-height:1.7;max-width:62ch;font-weight:600}
+.summary p{margin-bottom:.4em}
+.summary strong{font-weight:900}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;margin-top:26px;align-items:start}
+.pgrid section{background:var(--sheet);border:var(--bw) solid var(--line);border-radius:20px;padding:18px 20px;box-shadow:var(--shadow)}
+.pgrid .stack-col{display:flex;flex-direction:column;gap:22px}
+.unit-progress{list-style:none;padding:0;margin:14px 0 0;display:flex;flex-direction:column;gap:14px}
+.up-head{display:flex;justify-content:space-between;gap:10px;font-size:.92rem;font-weight:700;margin-bottom:6px}
+.qchart{display:flex;align-items:flex-end;gap:6px;height:140px;margin-top:14px;border-bottom:2.5px solid var(--line)}
+.qbar{flex:1;max-width:38px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px}
+.qbar i{display:block;width:100%;background:var(--yellow);border:2.5px solid var(--line);border-bottom:0;border-radius:8px 8px 0 0;min-height:4px}
+.qbar span{font-size:.7rem;color:var(--ink-2);font-weight:800}
+.stack{display:flex;height:18px;border-radius:999px;overflow:hidden;background:var(--rule-soft);border:2.5px solid var(--line);margin:14px 0 10px}
+.stack i{display:block;height:100%}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.85rem;color:var(--ink-2);font-weight:700}
+.legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:4px;border:2px solid var(--line);margin-right:6px;background:var(--c);vertical-align:-2px}
+.album-sec{margin-top:26px}
+.album{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:18px 12px;margin-top:12px;padding:20px 16px;background-color:var(--sheet);background-image:radial-gradient(circle,var(--rule) 1.3px,transparent 1.6px);background-size:18px 18px;border:var(--bw) solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
+.stk{margin:0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
+.sticker{display:block;transform:rotate(var(--r,0deg));filter:drop-shadow(2px 3px 0 rgba(43,27,61,.3))}
+.sticker-empty{width:86px;height:86px;border:3px dashed var(--ink-3);border-radius:50%;display:grid;place-items:center;font-family:var(--font-display);font-size:1.9rem;color:var(--ink-3);margin:12px 0}
+.stk figcaption strong{display:block;font-weight:900;font-size:.9rem}
+.stk figcaption span{display:block;font-size:.78rem;color:var(--ink-2);line-height:1.35}
+.stk:not(.got) figcaption strong{color:var(--ink-2)}
+
+/* material */
+.drop{border:3px dashed var(--ink-3);border-radius:22px;padding:30px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;margin:18px 0;background:var(--sheet)}
+.drop.over{border-style:solid;border-color:var(--line);background:var(--yellow-soft)}
+.drop strong{font-family:var(--font-display);font-weight:400;font-size:1.3rem}
+.imports{list-style:none;padding:0;margin:0 0 10px}
+.imports li{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 14px;border-radius:14px;background:var(--sheet);border:2.5px solid var(--line);margin-bottom:10px;font-size:.92rem;box-shadow:2px 2px 0 var(--line)}
+.imports li.err{background:var(--bad-bg)}
+.paste{margin:10px 0 24px;border:2.5px solid var(--line);border-radius:16px;padding:12px 16px;background:var(--sheet);box-shadow:2px 2px 0 var(--line)}
+.paste summary{cursor:pointer;font-weight:800}
+.paste .btn{margin-top:14px}
+.files{list-style:none;padding:0;margin:12px 0 0;display:flex;flex-direction:column;gap:10px}
+.files li{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:10px 14px;background:var(--sheet);border:2.5px solid var(--line);border-radius:14px;box-shadow:2px 2px 0 var(--line)}
+.files li div{min-width:0}
+.files strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:800}
+.files .muted{font-size:.88rem}
+.cta-box{margin:26px 0 18px;padding:18px 20px;border-radius:20px;background:var(--purple-soft);border:var(--bw) solid var(--line);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;align-items:flex-start;font-weight:700}
+
+/* dialogs */
+dialog{border:var(--bw) solid var(--line);border-radius:22px;padding:0;background:var(--sheet);color:var(--ink);width:min(560px,calc(100vw - 32px));max-height:calc(100dvh - 48px);box-shadow:6px 6px 0 var(--line)}
+dialog::backdrop{background:rgba(43,27,61,.55)}
+.dlg{padding:24px}
+.dlg h2{font-size:1.6rem;margin-bottom:6px}
+.dlg p{margin-top:8px}
+.dlg-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:22px;flex-wrap:wrap}
+.dlg-h{font-size:1.2rem;margin:20px 0 6px}
+.dlg .row{margin-top:10px}
+.dlg .muted.small{margin-top:8px}
+.src-text{white-space:pre-wrap;max-height:50vh;overflow:auto;background:var(--rule-soft);border:2px solid var(--rule);padding:14px 16px;border-radius:14px;font-size:.95rem;line-height:1.6;margin-top:12px}
+.celebrate{overflow:hidden;text-align:center}
+.cel-body{position:relative;padding:26px 24px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.cel-body h2{font-size:2rem}
+.cel-stickers{display:flex;gap:18px 22px;flex-wrap:wrap;justify-content:center;margin:6px 0}
+.cel-stickers .stk{width:130px}
+.cel-stickers .sticker{animation:peel .8s cubic-bezier(.2,1.5,.4,1) both}
+.cel-stickers .stk:nth-child(2) .sticker{animation-delay:.15s}.cel-stickers .stk:nth-child(3) .sticker{animation-delay:.3s}.cel-stickers .stk:nth-child(4) .sticker{animation-delay:.45s}
+@keyframes peel{from{transform:scale(.2) rotate(-50deg);opacity:0}to{transform:scale(1) rotate(var(--r,0deg));opacity:1}}
+.cel-body .dlg-actions{justify-content:center;margin-top:8px}
+.confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.confetti i{position:absolute;top:-16px;width:10px;height:15px;border:2px solid var(--line);border-radius:3px;animation:fall 1.8s ease-in forwards}
+.cel-body{z-index:1}
+@keyframes fall{to{transform:translateY(560px) rotate(560deg);opacity:0}}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--sheet);color:var(--ink);border:var(--bw) solid var(--line);padding:12px 18px;border-radius:16px;max-width:min(520px,calc(100vw - 32px));opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;font-size:.95rem;font-weight:700;z-index:50;box-shadow:var(--shadow)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.err{background:var(--bad-bg)}
+.loading{color:var(--ink-2);padding:40px 0;font-weight:700}
+
+/* practice */
+.prac-intro{margin-bottom:20px;max-width:62ch;font-weight:600}
+.goal-card{margin-bottom:8px}
+.inbox-card{margin-bottom:24px;max-width:840px}
+.inbox-card .card-head{background:var(--pink-soft)}
+.inbox-card .card-head h2{font-size:1.35rem;margin:0}
+.goal-card .card-head{background:var(--purple-soft)}
+.goal-card .card-head h2{font-size:1.4rem;margin:0}
+.goal-bar{height:20px}
+.prow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;background:var(--sheet);border:2.5px solid var(--line);border-radius:16px;box-shadow:var(--shadow-sm)}
+.prow .pt{display:flex;flex-direction:column;gap:6px;min-width:0}
+.prow .t{font-weight:800}
+.lvl{display:inline-flex;gap:5px}
+.lvl i{width:22px;height:10px;border-radius:999px;border:2px solid var(--line);background:var(--rule-soft)}
+.lvl i.on{background:var(--yellow)}
+.prac{max-width:720px;margin:0 auto;min-height:calc(100vh - 26px);min-height:calc(100dvh - 26px);display:flex;flex-direction:column}
+.main:has(.prac){padding-bottom:0}
+.prac-top{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+.prac-top .bar{flex:1;height:22px}
+.combo{font-weight:900;font-size:.9rem;min-width:5.5em;text-align:right;white-space:nowrap}
+.combo:not(:empty){background:var(--yellow);color:#2B1B3D;border:2.5px solid var(--line);border-radius:999px;padding:2px 10px;min-width:0}
+.prac-body{flex:1}
+.prac-wait{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding-top:30px}
+.prac-wait h2{font-size:1.6rem}
+.prac-wait p{max-width:50ch;font-weight:600}
+.prac-kicker{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-weight:800;font-size:.88rem}
+.prac-kicker span:first-child{background:var(--purple-soft);border:2px solid var(--line);border-radius:999px;padding:1px 12px}
+.retry-tag{background:var(--yellow);color:#2B1B3D;border:2px solid var(--line);border-radius:999px;padding:1px 10px}
+.prac-q{font-size:clamp(1.45rem,3.2vw,2rem);margin-bottom:24px;max-width:36ch;line-height:1.2}
+.tf{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:540px}
+.tf .opt{justify-content:center;font-size:1.15rem;padding:20px}
+.tiles{display:flex;flex-wrap:wrap;gap:12px}
+.tiles.steps{flex-direction:column;align-items:stretch}
+.tile{font:inherit;font-weight:800;padding:10px 16px;min-height:48px;border:2.5px solid var(--line);border-radius:14px;background:var(--sheet);color:var(--ink);cursor:pointer;box-shadow:var(--shadow-sm);text-align:left;line-height:1.3;transition:transform .07s,box-shadow .07s,background .12s}
+.tile:hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--line)}
+.tile:active:not(:disabled){transform:translate(3px,3px);box-shadow:0 0 0 var(--line)}
+.tile:disabled{cursor:default}
+.tile.sel{background:var(--yellow);color:#2B1B3D}
+.tile.ph{color:transparent;background:transparent;border:2.5px dashed var(--ink-3);box-shadow:none}
+.tile.ok{background:var(--good-bg)}
+.tile.bad{background:var(--bad-bg)}
+.tile.done{opacity:.45;box-shadow:none}
+.line-area{min-height:72px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:12px;margin-bottom:24px;border:3px dashed var(--ink-3);border-radius:18px;background:var(--sheet)}
+.line-area.steps{flex-direction:column;align-items:stretch}
+.line-hint{color:var(--ink-2);font-size:.92rem;font-weight:700}
+.gap-sent{font-size:clamp(1.2rem,2.6vw,1.45rem);font-weight:700;line-height:2.4;margin-bottom:26px;max-width:40ch;background:var(--sheet);border:var(--bw) solid var(--line);border-radius:20px;padding:14px 20px;box-shadow:var(--shadow)}
+.slot{display:inline-block;min-width:5.5em;text-align:center;border:2.5px dashed var(--ink-3);background:var(--rule-soft);font:inherit;font-weight:900;padding:0 12px;margin:0 4px;color:var(--ink);cursor:pointer;line-height:1.6;border-radius:10px}
+.slot.filled{background:var(--yellow);color:#2B1B3D;border-style:solid;border-color:var(--line)}
+.slot.ok{background:var(--good-fill);color:#2B1B3D;border-style:solid;border-color:var(--line)}
+.slot.bad{background:var(--bad-fill);color:#2B1B3D;border-style:solid;border-color:var(--line)}
+.slot:disabled{cursor:default}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.mcol{display:flex;flex-direction:column;gap:12px}
+.mcol .tile{width:100%}
+.shake{animation:shake .4s}
+@keyframes shake{0%,100%{transform:none}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.tray{min-height:52px;margin-bottom:20px}
+.bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:14px}
+.bin{border:var(--bw) solid var(--line);border-radius:18px;background:var(--sheet);overflow:hidden;box-shadow:var(--shadow)}
+.bin-head{display:block;width:100%;text-align:left;font-family:var(--font-display);font-size:1.15rem;padding:10px 14px;background:var(--blue-soft);border:0;border-bottom:var(--bw) solid var(--line);color:var(--ink);cursor:pointer}
+.bins .bin:nth-child(2) .bin-head{background:var(--pink-soft)}
+.bins .bin:nth-child(3) .bin-head{background:var(--purple-soft)}
+.bin-head:disabled{cursor:default}
+.bin-head.armed{background:var(--yellow)!important;color:#2B1B3D}
+.bin-items{padding:12px 14px;min-height:76px}
+.type-ans{font-size:1.25rem;font-weight:700;padding:14px 16px;max-width:540px;border-width:var(--bw);border-radius:16px;box-shadow:var(--shadow-sm)}
+.type-ans.ok{background:var(--good-bg)}
+.type-ans.bad{background:var(--bad-bg)}
+.prac-foot{position:sticky;bottom:0;margin-top:30px;padding:14px 18px calc(14px + env(safe-area-inset-bottom,0px));background:var(--sheet);border:var(--bw) solid var(--line);border-bottom:0;border-radius:22px 22px 0 0;display:flex;justify-content:flex-end;align-items:center;gap:12px;z-index:5;box-shadow:0 -3px 0 rgba(43,27,61,.08)}
+.prac-foot.fb{justify-content:space-between;animation:rise .22s ease-out}
+.prac-foot.good{background:var(--good-bg)}
+.prac-foot.bad{background:var(--bad-bg)}
+.prac-foot.good strong{color:var(--good)}
+.prac-foot.bad strong{color:var(--bad)}
+.prac-foot .hint{margin-right:auto;font-weight:700}
+.fb-main{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
+.fb-text{flex:1;min-width:0;line-height:1.5}
+.fb-text strong{font-family:var(--font-display);font-weight:400;font-size:1.45rem}
+.fb-text p{margin-top:4px;font-weight:600}
+@keyframes rise{from{transform:translateY(16px);opacity:.3}to{transform:none;opacity:1}}
+.prac-done{max-width:640px;margin:0 auto;padding-top:6px}
+.prac-done .buddy{margin-bottom:20px;justify-content:center}
+.prac-done .card-head{background:var(--yellow-soft)}
+.prac-done .card-head h2{font-size:1.7rem;margin:0}
+.prac-done .row{padding-top:6px}
+
+@media (max-width:760px){
+  .app{grid-template-columns:1fr}
+  .side{position:static;max-height:none;padding:14px 16px 4px;gap:10px;flex-direction:row;flex-wrap:wrap;align-items:center}
+  .brand{font-size:1.4rem;margin-right:auto}
+  .side-buddy .mascot{width:44px;height:44px}
+  .side-courses{order:3;width:100%}
+  .side-label,.store-note{display:none}
+  .courses{flex-direction:row;overflow-x:auto;gap:8px;padding:2px 4px 6px 2px;scrollbar-width:none}
+  .course-link{width:auto;flex:none;border-radius:999px;padding:6px 14px}
+  .course-link .sub{display:none}
+  .main{padding:12px 16px 56px}
+  .course-head h1{font-size:1.8rem}
+  .card-head,.card-body{padding-left:16px;padding-right:16px}
+  .form-row{grid-template-columns:1fr}
+  .lrow{grid-template-columns:28px minmax(0,1fr)}
+  .lrow .d{grid-column:2;justify-self:start}
+  .fc-face{padding:48px 18px 24px;min-height:230px}
+  .reading{padding:18px}
+  .empty{flex-direction:column;gap:10px}
+  .buddy .mascot{width:64px;height:64px}
+  .prac-top{margin-bottom:20px}
+  .prac-foot{padding-left:14px;padding-right:14px}
+  .prac-foot .btn{flex:1}
+  .prac-foot.fb{flex-direction:column;align-items:stretch}
+  .prac-foot .hint{display:none}
+  .fb-main .mascot{width:48px;height:48px}
+  .tile{padding:10px 12px}
+  .match{gap:10px}
+  .album{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}
+}
+.touch-tip{display:none}
+@media (hover:none) and (pointer:coarse){
+  .kbd-tip,kbd,.prac-foot .hint{display:none!important}
+  .touch-tip{display:inline}
+}
+@media (prefers-reduced-motion:reduce){
+  .fc-inner,.bar>i,.toast,.btn,.tile,.opt,.lrow{transition:none}
+  .pulse i,.mascot.cheer,.mascot.sad,.shake,.prac-foot.fb,.cel-stickers .sticker{animation:none}
+  .confetti{display:none}
+}
+</style>
+</head>
+<body>
+<div id="install-tip" class="banner" hidden style="margin:12px 16px 0;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+  <span>Install Blokboek first: tap <strong>Share</strong> <span aria-hidden="true">(the square with the arrow)</span>, then <strong>Add to Home Screen</strong>. Open it from your home screen before you import your subjects.</span>
+  <button class="btn ghost small" type="button" id="install-tip-close">OK</button>
+</div>
+<div class="app">
+  <aside class="side" id="side"></aside>
+  <main class="main" id="main"></main>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<input type="file" id="import-input" hidden>
+<script id="bb-app">
+(() => {
+'use strict';
+
+const PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+const PDFJS_WORKER = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+const JSZIP = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+const INTERVALS = [0, 1, 3, 7, 14, 30];
+const LANGS = {
+  nl: 'Write everything in Dutch.',
+  en: 'Write everything in English.',
+  src: 'Write in the same language as the study material.'
+};
+const TABS = [['plan', 'Plan'], ['practice', 'Practise'], ['quiz', 'Quiz'], ['cards', 'Flashcards'], ['progress', 'Progress'], ['material', 'Material']];
+
+const S = {
+  ready: false, courses: [], cid: null, course: null, cards: [],
+  chunks: new Map(), chunkList: [], lessonCache: {},
+  tab: 'plan', lessonId: null, busy: null, stream: null,
+  quiz: null, review: null, importing: [],
+  sample: null, ai: false, pasteOpen: false, cardsOpen: false, prac: null, pool: [], downloads: null, inbox: []
+};
+
+/* ---------- utilities ---------- */
+const $ = (sel, root = document) => root.querySelector(sel);
+function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+function rid() { return Math.random().toString(36).slice(2, 8) + Date.now().toString(36).slice(-4); }
+function pad(n) { return String(n).padStart(2, '0'); }
+function dstr(d) { return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; }
+function today() { return dstr(new Date()); }
+function parseD(s) { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); }
+function addDays(s, n) { const d = parseD(s); d.setDate(d.getDate() + n); return dstr(d); }
+function diffDays(a, b) { return Math.round((parseD(b) - parseD(a)) / 86400000); }
+const fmtShort = new Intl.DateTimeFormat('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+const fmtLong = new Intl.DateTimeFormat('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+function relDay(s) { const n = diffDays(today(), s); if (n === 0) return 'today'; if (n === 1) return 'tomorrow'; return fmtShort.format(parseD(s)); }
+function relDayLong(s) { const n = diffDays(today(), s); if (n === 0) return 'today'; if (n === 1) return 'tomorrow'; return 'on ' + fmtLong.format(parseD(s)); }
+function clone(o) { return o == null ? o : JSON.parse(JSON.stringify(o)); }
+function bytes(s) { return new TextEncoder().encode(s).length; }
+function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+function plural(n, one, many) { return `${n} ${n === 1 ? one : many}`; }
+
+let toastTimer;
+function toast(msg, isErr) {
+  const el = $('#toast');
+  el.textContent = msg;
+  el.className = 'toast show' + (isErr ? ' err' : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.className = 'toast'; }, isErr ? 7000 : 3500);
+}
+
+/* ---------- storage ---------- */
+function openIdb() {
+  return new Promise((res, rej) => {
+    try {
+      const r = indexedDB.open('blokboek', 1);
+      r.onupgradeneeded = () => r.result.createObjectStore('kv');
+      r.onsuccess = () => res(r.result);
+      r.onerror = () => rej(r.error);
+    } catch (e) { rej(e); }
+  });
+}
+function idbReq(db, mode, fn) {
+  return new Promise((res, rej) => {
+    const tx = db.transaction('kv', mode);
+    const r = fn(tx.objectStore('kv'));
+    tx.oncomplete = () => res(r && r.result);
+    tx.onerror = () => rej(tx.error);
+    tx.onabort = () => rej(tx.error);
+  });
+}
+async function retry(fn) {
+  try { return await fn(); }
+  catch (e) {
+    if (e && e.code === 'unavailable') { await sleep(400 + Math.random() * 700); return fn(); }
+    throw e;
+  }
+}
+let lastSaveErr = 0;
+function saveError(e) {
+  if (Date.now() - lastSaveErr < 8000) return;
+  lastSaveErr = Date.now();
+  const code = e && e.code;
+  if (code === 'invalid_argument') toast('Saving doesn\'t work: you only have read access to this page.', true);
+  else if (code === 'quota_exceeded') toast('Storage is full. Delete material or a subject you no longer need.', true);
+  else if (code === 'too_big') toast('This item is too large to save.', true);
+  else toast('Saving failed. Your work is still on screen; try again in a moment.', true);
+}
+
+const Store = {
+  mode: 'memory', col: null, idb: null, mem: new Map(), latest: new Map(), pending: new Map(), flushing: new Map(),
+  async init() {
+    const c = (window.claude && typeof window.claude.use === 'function') ? window.claude : null;
+    let db = null, user = null, sample = null;
+    if (c) {
+      let downloads;
+      [db, user, sample, downloads] = await Promise.all(['db', 'user', 'sample', 'downloads'].map(n => c.use(n).catch(() => null)));
+      S.downloads = downloads || null;
+    }
+    S.sample = sample || null;
+    S.ai = !!sample;
+    let uid = null;
+    if (db && user) { try { uid = await user.id(); } catch (e) { uid = null; } }
+    if (db && uid) { this.mode = 'db'; this.db = db; this.col = db.collection('data/users/' + uid); return; }
+    try { this.idb = await openIdb(); this.mode = 'local'; } catch (e) { this.mode = 'memory'; }
+  },
+  async get(key) {
+    if (this.latest.has(key)) return clone(this.latest.get(key));
+    if (this.mode === 'db') { const snap = await retry(() => this.col.doc(key).get()); return snap.exists ? clone(snap.data()) : null; }
+    if (this.mode === 'local') { const v = await idbReq(this.idb, 'readonly', st => st.get(key)); return v ?? null; }
+    return clone(this.mem.get(key) ?? null);
+  },
+  async write(key, val) {
+    if (bytes(JSON.stringify(val)) > 250000) throw { code: 'too_big' };
+    if (this.mode === 'db') return retry(() => this.col.doc(key).set(val));
+    if (this.mode === 'local') return idbReq(this.idb, 'readwrite', st => st.put(val, key));
+    this.mem.set(key, clone(val));
+  },
+  async remove(key) {
+    this.pending.delete(key); this.latest.delete(key);
+    if (this.mode === 'db') return retry(() => this.col.doc(key).delete());
+    if (this.mode === 'local') return idbReq(this.idb, 'readwrite', st => st.delete(key));
+    this.mem.delete(key);
+  },
+  save(key, val) {
+    const v = clone(val);
+    this.pending.set(key, v); this.latest.set(key, v);
+    if (!this.flushing.has(key)) this.flushing.set(key, this._flush(key));
+    return this.flushing.get(key);
+  },
+  async _flush(key) {
+    try {
+      while (this.pending.has(key)) {
+        const v = this.pending.get(key); this.pending.delete(key);
+        try { await this.write(key, v); } catch (e) { saveError(e); }
+      }
+    } finally { this.flushing.delete(key); }
+  },
+  async put(key, val) {
+    await (this.flushing.get(key) || Promise.resolve());
+    await this.write(key, val);
+    if (this.latest.has(key)) this.latest.set(key, clone(val));
+  }
+};
+function saveCourse() { if (S.course) Store.save('course-' + S.course.id, S.course); }
+function saveCards() { if (S.course) Store.save('cards-' + S.course.id, { cards: S.cards }); }
+function saveIndex() { Store.save('index', { courses: S.courses }); }
+function syncIndex() {
+  const c = S.course; if (!c) return;
+  const e = S.courses.find(x => x.id === c.id);
+  if (e) { e.name = c.name; e.exam = c.exam; saveIndex(); }
+}
+function rememberCourse(id) { try { localStorage.setItem('blokboek-last', id || ''); } catch (e) { /* ignore */ } }
+
+/* ---------- AI ---------- */
+function aiErrorText(e) {
+  const code = e && e.code;
+  switch (code) {
+    case 'not_granted': case 'sampling_disabled': case 'not_declared': case 'capability_disabled': case 'capability_removed':
+      S.ai = false;
+      return 'Claude may not be used on this page. Allow it in this artifact\'s Permissions menu and reload the page.';
+    case 'rate_limited': return 'Too many requests, or you have reached your Claude usage limit. Try again later.';
+    case 'session_expired': return 'Your session has expired. Sign in to Claude again and retry.';
+    case 'prompt_too_large': return 'This is too much text at once. Pick a smaller part, for example one chapter.';
+    case 'invalid_json': return 'Claude\'s answer did not come back in the right format. Try again.';
+    case 'refused': return 'Claude could not process this material. Try another part.';
+    case 'empty_completion': return 'Claude gave no answer. Try a smaller part.';
+    default:
+      if (!code && e && e.message) return e.message;
+      return 'The connection to Claude was interrupted. Try again.';
+  }
+}
+async function runAi(info, fn) {
+  if (!S.sample || !S.ai) { toast('AI features only work when you open this page in Claude.', true); return null; }
+  if (S.busy) { toast('Claude is still busy. Wait a moment or click Stop.'); return null; }
+  const ctl = new AbortController();
+  S.busy = Object.assign({}, info, { ctl });
+  renderAll();
+  try { return await fn(ctl.signal); }
+  catch (e) { if (!(e && e.code === 'cancelled')) toast(aiErrorText(e), true); return null; }
+  finally { S.busy = null; renderAll(); }
+}
+function busyHtml() {
+  if (!S.busy) return '';
+  return `<div class="busy" role="status"><span class="pulse" aria-hidden="true"><i></i><i></i><i></i></span><div><strong>${esc(S.busy.label)}</strong><p>${esc(S.busy.hint || 'This usually takes between 20 seconds and a few minutes. If Claude asks for permission, allow it.')}</p></div><button class="btn ghost small" data-act="stop">Stop</button></div>`;
+}
+function aiButton(act, label, variant = 'primary', id = '') {
+  const dis = !S.ai || !!S.busy;
+  return `<button type="button" class="btn ${variant}" data-act="${act}"${id ? ` data-id="${esc(id)}"` : ''}${dis ? ' disabled' : ''}>${esc(label)}</button>`;
+}
+
+/* ---------- reading files ---------- */
+const loaded = {};
+function loadScript(src) {
+  if (loaded[src]) return loaded[src];
+  loaded[src] = new Promise((res, rej) => {
+    const s = document.createElement('script');
+    s.src = src; s.async = false;
+    s.onload = () => res();
+    s.onerror = () => { delete loaded[src]; rej(new Error('A component for reading files could not load. Check your internet connection and try again.')); };
+    document.head.appendChild(s);
+  });
+  return loaded[src];
+}
+const NS = {
+  a: 'http://schemas.openxmlformats.org/drawingml/2006/main',
+  p: 'http://schemas.openxmlformats.org/presentationml/2006/main',
+  r: 'http://schemas.openxmlformats.org/officeDocument/2006/relationships',
+  w: 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'
+};
+function xml(str) { return new DOMParser().parseFromString(str, 'application/xml'); }
+function resolvePath(base, target) {
+  if (target.startsWith('/')) return target.slice(1);
+  const parts = base.split('/'); parts.pop();
+  for (const seg of target.split('/')) { if (seg === '..') parts.pop(); else if (seg && seg !== '.') parts.push(seg); }
+  return parts.join('/');
+}
+async function rels(zip, partPath) {
+  const dir = partPath.split('/'); const fname = dir.pop();
+  const f = zip.file([...dir, '_rels', fname + '.rels'].join('/'));
+  if (!f) return [];
+  const doc = xml(await f.async('string'));
+  return [...doc.getElementsByTagName('Relationship')].map(r => ({
+    id: r.getAttribute('Id'), type: r.getAttribute('Type') || '',
+    target: resolvePath(partPath, r.getAttribute('Target') || '')
+  }));
+}
+function drawingText(doc) {
+  return [...doc.getElementsByTagNameNS(NS.a, 'p')]
+    .map(p => [...p.getElementsByTagNameNS(NS.a, 't')].map(t => t.textContent).join(''))
+    .filter(s => s.trim()).join('\n');
+}
+async function extractPdf(file, onProg) {
+  await loadScript(PDFJS_WORKER);
+  await loadScript(PDFJS);
+  const lib = window.pdfjsLib;
+  if (!lib) throw new Error('The PDF reader could not start. Refresh the page and try again.');
+  lib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER;
+  let pdf;
+  try {
+    pdf = await lib.getDocument({ data: new Uint8Array(await file.arrayBuffer()), isEvalSupported: false, disableFontFace: true }).promise;
+  } catch (e) {
+    if (e && e.name === 'PasswordException') throw new Error('This PDF is password-protected. Save it without a password first.');
+    throw new Error('This PDF could not be opened. The file may be damaged.');
+  }
+  const out = [];
+  for (let p = 1; p <= pdf.numPages; p++) {
+    const page = await pdf.getPage(p);
+    const tc = await page.getTextContent();
+    let text = '';
+    for (const it of tc.items) {
+      if (typeof it.str !== 'string') continue;
+      text += it.str;
+      if (it.hasEOL) text += '\n';
+      else if (it.str && !/\s$/.test(it.str)) text += ' ';
+    }
+    out.push({ label: 'p.', n: p, text });
+    if (onProg) onProg(p, pdf.numPages);
+    if (page.cleanup) page.cleanup();
+  }
+  if (pdf.destroy) pdf.destroy();
+  return out;
+}
+async function extractPptx(file, onProg) {
+  await loadScript(JSZIP);
+  let zip;
+  try { zip = await window.JSZip.loadAsync(file); } catch (e) { throw new Error('This presentation could not be opened. The file may be damaged.'); }
+  let slides = [];
+  const pres = zip.file('ppt/presentation.xml');
+  if (pres) {
+    const doc = xml(await pres.async('string'));
+    const rs = await rels(zip, 'ppt/presentation.xml');
+    const map = new Map(rs.map(r => [r.id, r.target]));
+    slides = [...doc.getElementsByTagNameNS(NS.p, 'sldId')].map(el => map.get(el.getAttributeNS(NS.r, 'id'))).filter(Boolean);
+  }
+  if (!slides.length) {
+    const num = n => parseInt((n.match(/(\d+)\.xml$/) || [0, 0])[1], 10);
+    slides = Object.keys(zip.files).filter(n => /^ppt\/slides\/slide\d+\.xml$/.test(n)).sort((a, b) => num(a) - num(b));
+  }
+  const out = [];
+  for (let i = 0; i < slides.length; i++) {
+    const f = zip.file(slides[i]);
+    if (!f) continue;
+    let text = drawingText(xml(await f.async('string')));
+    const rs = await rels(zip, slides[i]);
+    const nr = rs.find(r => /\/notesSlide$/.test(r.type));
+    if (nr) {
+      const nf = zip.file(nr.target);
+      if (nf) {
+        const nt = drawingText(xml(await nf.async('string'))).split('\n').filter(l => !/^\d+$/.test(l.trim())).join('\n');
+        if (nt.trim()) text += '\nNotities: ' + nt;
+      }
+    }
+    out.push({ label: 'slide', n: i + 1, text });
+    if (onProg) onProg(i + 1, slides.length);
+  }
+  return out;
+}
+async function extractDocx(file) {
+  await loadScript(JSZIP);
+  let zip;
+  try { zip = await window.JSZip.loadAsync(file); } catch (e) { throw new Error('This Word file could not be opened. It may be damaged.'); }
+  const f = zip.file('word/document.xml');
+  if (!f) throw new Error('This Word file could not be read.');
+  const doc = xml(await f.async('string'));
+  const paras = [...doc.getElementsByTagNameNS(NS.w, 'p')].map(p => {
+    let t = '';
+    for (const el of p.getElementsByTagNameNS(NS.w, '*')) {
+      if (el.localName === 't') t += el.textContent;
+      else if (el.localName === 'tab') t += '\t';
+      else if (el.localName === 'br') t += '\n';
+    }
+    const st = p.getElementsByTagNameNS(NS.w, 'pStyle')[0];
+    const val = st ? (st.getAttributeNS(NS.w, 'val') || st.getAttribute('w:val') || '') : '';
+    if (t.trim() && /^(heading|kop|title|titel)/i.test(val)) t = '# ' + t;
+    return t;
+  }).filter(t => t.trim());
+  return sectionsFromParas(paras);
+}
+function sectionsFromParas(paras) {
+  const out = []; let cur = '';
+  for (const p of paras) {
+    if (cur && cur.length + p.length > 1500) { out.push({ label: 'part', n: out.length + 1, text: cur }); cur = ''; }
+    cur += (cur ? '\n\n' : '') + p;
+  }
+  if (cur.trim()) out.push({ label: 'part', n: out.length + 1, text: cur });
+  return out;
+}
+function sectionsFromText(text) { return sectionsFromParas(text.replace(/\r/g, '').split(/\n\s*\n/).map(s => s.trim()).filter(Boolean)); }
+function cleanText(s) {
+  return String(s || '').replace(/\u0000/g, '').replace(/(\w)-\n(\w)/g, '$1$2').replace(/[ \t\u00A0]+/g, ' ')
+    .replace(/ *\n */g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+function splitText(t, max) {
+  const units = t.match(/[^.!?\n]+(?:[.!?]+|\n|$)/g) || [t];
+  const out = []; let cur = '';
+  for (let u of units) {
+    u = u.trim(); if (!u) continue;
+    if (u.length > max) { if (cur) { out.push(cur); cur = ''; } for (let i = 0; i < u.length; i += max) out.push(u.slice(i, i + max)); continue; }
+    if (cur.length + u.length + 1 > max) { out.push(cur); cur = u; } else cur = cur ? cur + ' ' + u : u;
+  }
+  if (cur) out.push(cur);
+  return out;
+}
+function locStr(label, a, b) { return a === b ? `${label} ${a}` : `${label} ${a}–${b}`; }
+function makeChunks(sections, file, fileId, c, max) {
+  const out = []; let cur = null;
+  const push = () => {
+    if (cur && cur.text.trim()) out.push({ id: 'c' + (c.next++), fileId, file, loc: locStr(cur.label, cur.a, cur.b), text: cur.text.trim() });
+    cur = null;
+  };
+  for (const s of sections) {
+    const t = cleanText(s.text);
+    if (t.length < 3) continue;
+    if (t.length > max * 1.35) {
+      push();
+      for (const piece of splitText(t, max)) out.push({ id: 'c' + (c.next++), fileId, file, loc: locStr(s.label, s.n, s.n), text: piece });
+      continue;
+    }
+    if (cur && cur.label === s.label && cur.text.length + t.length <= max) { cur.text += '\n\n' + t; cur.b = s.n; }
+    else { push(); cur = { label: s.label, a: s.n, b: s.n, text: t }; }
+  }
+  push();
+  return out;
+}
+function fileKind(name) {
+  const ext = (name.split('.').pop() || '').toLowerCase();
+  if (ext === 'pdf') return 'pdf';
+  if (ext === 'pptx') return 'pptx';
+  if (ext === 'docx') return 'docx';
+  if (['txt', 'md', 'markdown', 'csv', 'text'].includes(ext)) return 'text';
+  if (ext === 'ppt') throw new Error('Old PowerPoint files (.ppt) cannot be read. Save the presentation as .pptx or PDF.');
+  if (ext === 'doc') throw new Error('Old Word files (.doc) cannot be read. Save the file as .docx or PDF.');
+  throw new Error(`.${ext} files are not supported. Use PDF, PowerPoint (.pptx), Word (.docx) or a text file.`);
+}
+async function extract(kind, file, onProg) {
+  if (kind === 'pdf') return extractPdf(file, onProg);
+  if (kind === 'pptx') return extractPptx(file, onProg);
+  if (kind === 'docx') return extractDocx(file);
+  return sectionsFromText(await file.text());
+}
+function setChunks(list) {
+  S.chunkList = list;
+  S.chunks = new Map(list.map(c => [c.id, c]));
+}
+async function addMaterial(name, kind, sections) {
+  const c = S.course;
+  const fileId = rid();
+  const chunks = makeChunks(sections, name, fileId, c, kind === 'pptx' ? 1200 : 1800);
+  if (!chunks.length) {
+    throw new Error(kind === 'pdf'
+      ? 'This PDF contains no readable text. It is probably a scan made only of images.'
+      : 'This file contains no readable text.');
+  }
+  const docs = []; let cur = []; let size = 0;
+  for (const ch of chunks) {
+    const b = bytes(JSON.stringify(ch));
+    if (cur.length && size + b > 200000) { docs.push(cur); cur = []; size = 0; }
+    cur.push(ch); size += b;
+  }
+  if (cur.length) docs.push(cur);
+  for (let i = 0; i < docs.length; i++) {
+    try { await Store.put(`mat-${c.id}-${fileId}-${i}`, { chunks: docs[i] }); }
+    catch (e) {
+      for (let j = 0; j < i; j++) Store.remove(`mat-${c.id}-${fileId}-${j}`).catch(() => {});
+      if (e && e.code === 'quota_exceeded') throw new Error('Storage is full. First delete material or a subject you no longer need.');
+      if (e && e.code === 'invalid_argument') throw new Error('Saving doesn\'t work: you only have read access to this page.');
+      throw new Error('Saving this file failed. Try again.');
+    }
+  }
+  const chars = chunks.reduce((a, x) => a + x.text.length, 0);
+  c.files.push({ id: fileId, name, kind, parts: sections.length, chunks: chunks.length, chars, docs: docs.length, added: today() });
+  saveCourse();
+  setChunks([...S.chunkList, ...chunks]);
+}
+async function handleFiles(list) {
+  const files = [...list];
+  if (!files.length || !S.course) return;
+  const items = files.map(f => ({ key: rid(), name: f.name, status: 'Waiting', error: null }));
+  S.importing.push(...items);
+  renderMain();
+  for (let i = 0; i < files.length; i++) {
+    const f = files[i], it = items[i];
+    it.status = 'Reading'; paintImports();
+    try {
+      const kind = fileKind(f.name);
+      if (f.size > 80 * 1024 * 1024) throw new Error('This file is larger than 80 MB. Split it into smaller parts.');
+      const sections = await extract(kind, f, (a, b) => { it.status = `${kind === 'pptx' ? 'Slide' : 'Page'} ${a} of ${b} read`; paintImports(); });
+      it.status = 'Saving'; paintImports();
+      await addMaterial(f.name, kind, sections);
+      S.importing = S.importing.filter(x => x !== it);
+    } catch (e) {
+      it.error = (e && e.message) || 'This file could not be read.';
+    }
+    renderMain();
+  }
+}
+function importsHtml() {
+  if (!S.importing.length) return '';
+  return `<ul class="imports">${S.importing.map(it => `<li class="${it.error ? 'err' : ''}"><span><strong>${esc(it.name)}</strong><br><span class="muted">${esc(it.error || it.status + '…')}</span></span>${it.error ? `<button class="btn ghost small" data-act="dismiss-import" data-id="${it.key}">Close</button>` : '<span class="pulse" aria-hidden="true"><i></i><i></i><i></i></span>'}</li>`).join('')}</ul>`;
+}
+function paintImports() { const el = $('#imports'); if (el) el.innerHTML = importsHtml(); }
+
+/* ---------- plan helpers ---------- */
+function allLessons(c) {
+  const out = [];
+  if (!c.plan) return out;
+  c.plan.units.forEach((unit, ui) => unit.lessons.forEach(lesson => out.push({ unit, ui, lesson })));
+  return out;
+}
+function findLesson(lid) { return S.course ? allLessons(S.course).find(x => x.lesson.id === lid) || null : null; }
+function nextLesson(lid) { const L = allLessons(S.course); const i = L.findIndex(x => x.lesson.id === lid); return i >= 0 && i + 1 < L.length ? L[i + 1].lesson : null; }
+function computeSchedule(c) {
+  const t = today(); const map = {}; let perDay = c.perDay || 3; let reviewFrom = null;
+  if (!c.plan) return { map, perDay, reviewFrom };
+  const L = allLessons(c);
+  const undone = L.filter(x => !c.done[x.lesson.id]);
+  const doneToday = L.filter(x => c.done[x.lesson.id] === t).length;
+  if (c.exam && c.exam > t) {
+    const days = diffDays(t, c.exam);
+    const reserve = days >= 6 ? 2 : (days >= 3 ? 1 : 0);
+    const studyDays = Math.max(1, days - reserve);
+    perDay = Math.max(1, Math.ceil((undone.length + doneToday) / studyDays));
+    reviewFrom = reserve ? addDays(c.exam, -reserve) : null;
+  }
+  undone.forEach((x, i) => { map[x.lesson.id] = addDays(t, Math.floor((i + doneToday) / perDay)); });
+  return { map, perDay, reviewFrom, doneToday };
+}
+function examLine(c) {
+  if (!c.exam) return 'No exam date set yet';
+  const n = diffDays(today(), c.exam);
+  if (n < 0) return `Exam was on ${fmtLong.format(parseD(c.exam))}`;
+  if (n === 0) return 'Your exam is today. Good luck!';
+  return `Exam on ${fmtLong.format(parseD(c.exam))}, in ${plural(n, 'day', 'days')}`;
+}
+function examShort(e) {
+  if (!e.exam) return '';
+  const n = diffDays(today(), e.exam);
+  if (n < 0) return 'exam done';
+  if (n === 0) return 'exam today';
+  if (n === 1) return 'exam tomorrow';
+  return `${n} days to go`;
+}
+function streak(c) {
+  const set = new Set(c.activity || []);
+  let d = today(); if (!set.has(d)) d = addDays(d, -1);
+  let n = 0; while (set.has(d)) { n++; d = addDays(d, -1); }
+  return n;
+}
+function markActivity() {
+  const c = S.course; if (!c) return;
+  const t = today();
+  if (!c.activity.includes(t)) { c.activity.push(t); if (c.activity.length > 150) c.activity = c.activity.slice(-150); saveCourse(); }
+}
+function materialText(list, budget) {
+  const total = list.reduce((a, c) => a + c.text.length + 40, 0);
+  const per = total <= budget ? Infinity : Math.max(120, Math.floor(budget / Math.max(1, list.length)) - 40);
+  let out = '';
+  for (const c of list) {
+    const t = c.text.length > per ? c.text.slice(0, per) + ' …' : c.text;
+    const block = `[${c.id}] (${c.file}, ${c.loc})\n${t}\n\n`;
+    if (out.length + block.length > budget) break;
+    out += block;
+  }
+  return out;
+}
+function lessonChunks(lesson, budget = 36000) {
+  const set = new Set(lesson.sources);
+  const chunks = lesson.sources.map(id => S.chunks.get(id)).filter(Boolean);
+  let total = chunks.reduce((a, c) => a + c.text.length, 0);
+  if (chunks.length && total < 5000) {
+    for (const ch of [...chunks]) {
+      const nb = S.chunkList[S.chunkList.indexOf(ch) + 1];
+      if (nb && nb.fileId === ch.fileId && !set.has(nb.id)) { set.add(nb.id); chunks.push(nb); total += nb.text.length; }
+    }
+  }
+  const order = new Map(S.chunkList.map((c, i) => [c.id, i]));
+  chunks.sort((a, b) => order.get(a.id) - order.get(b.id));
+  return materialText(chunks, budget);
+}
+function scopeInfo(scope) {
+  const c = S.course;
+  if (scope && scope.startsWith('les:') && c.plan) {
+    const f = findLesson(scope.slice(4));
+    if (f) return { material: lessonChunks(f.lesson, 30000), label: f.lesson.title, unitId: f.unit.id, n: 6 };
+  }
+  if (scope && scope !== 'all' && c.plan) {
+    const u = c.plan.units.find(u => u.id === scope);
+    if (u) {
+      const ids = new Set(u.lessons.flatMap(l => l.sources));
+      const list = S.chunkList.filter(ch => ids.has(ch.id));
+      if (list.length) return { material: materialText(list, 60000), label: u.title, unitId: u.id, n: 12 };
+    }
+  }
+  const units = c.plan ? c.plan.units.length : 3;
+  return { material: materialText(S.chunkList, 80000), label: 'Whole subject', unitId: '', n: Math.min(30, Math.max(12, units * 6)) };
+}
+function scopeOptions(c, sel) {
+  let o = `<option value="all">Whole subject</option>`;
+  if (c.plan) c.plan.units.forEach((u, i) => { o += `<option value="${esc(u.id)}"${sel === u.id ? ' selected' : ''}>Chapter ${i + 1}: ${esc(u.title)}</option>`; });
+  return o;
+}
+function cleanId(s) { return String(s || '').replace(/[\[\]\s]/g, ''); }
+
+/* ---------- AI tasks ---------- */
+async function generatePlan() {
+  const c = S.course;
+  if (!S.chunkList.length) { toast('Add study material first.'); return; }
+  if (c.plan) {
+    const ok = await confirmDlg('A new plan replaces your current lessons. Your lesson progress starts over; your flashcards and quiz scores are kept.', 'Make new plan');
+    if (!ok) return;
+  }
+  S.tab = 'plan'; S.lessonId = null;
+  const totalChars = S.chunkList.reduce((a, ch) => a + ch.text.length, 0);
+  const target = Math.max(4, Math.min(30, Math.round(totalChars / 3500)));
+  const prompt = `You are an experienced teacher who divides study material into a clear study plan.
+
+Below is the study material for the subject "${c.name}", split into numbered fragments such as [c1] and [c2]. Each fragment shows which file and which page or slide it comes from.
+
+Make a study plan that divides the material into chapters with short lessons of 5 to 10 minutes.
+Rules:
+- About ${target} lessons in total (at least 3, at most 30), spread over 2 to 8 chapters.
+- Follow the logical order of the material: basic concepts first.
+- Each lesson covers one clearly defined topic and has a concrete learning goal that starts with "After this lesson you can" (in the language you write in).
+- For each lesson, give the ids of the fragments that contain its material (1 to 6 ids per lesson). Only use ids that really appear in the material.
+- Skip tables of contents, reading lists and practical information about the course (timetable, grading).
+- ${LANGS[c.lang] || LANGS.nl}
+
+Answer with only JSON in exactly this form:
+{"overview":"2 or 3 sentences about what this subject is about","units":[{"title":"Chapter title","lessons":[{"title":"Lesson title","goal":"After this lesson you can ...","sources":["c1","c2"]}]}]}
+
+STUDY MATERIAL:
+${materialText(S.chunkList, 140000)}`;
+  const res = await runAi({ kind: 'plan', label: 'Claude is making your study plan', hint: 'Claude reads all your material and divides it into lessons. With a lot of material this can take a few minutes. If Claude asks for permission, allow it.' },
+    signal => S.sample.json(prompt, { signal, cache: false }));
+  if (!res) return;
+  const plan = normalizePlan(res);
+  if (!plan) { toast('The plan did not come through properly. Try again.', true); return; }
+  for (const lid of Object.keys(c.written || {})) Store.remove(`les-${c.id}-${lid}`).catch(() => {});
+  c.plan = plan; c.done = {}; c.written = {}; c.planMade = today();
+  S.lessonCache = {};
+  saveCourse();
+  toast('Your study plan is ready.');
+  renderAll();
+}
+function normalizePlan(res) {
+  if (!res || !Array.isArray(res.units)) return null;
+  const valid = new Set(S.chunkList.map(c => c.id));
+  let ln = 0; const units = [];
+  for (const u of res.units) {
+    if (!u || !Array.isArray(u.lessons)) continue;
+    const lessons = u.lessons.filter(l => l && l.title).slice(0, 10).map(l => ({
+      id: 'l' + (++ln) + '-' + rid().slice(0, 4),
+      title: String(l.title).slice(0, 160),
+      goal: String(l.goal || '').slice(0, 260),
+      sources: (Array.isArray(l.sources) ? l.sources : []).map(cleanId).filter(s => valid.has(s)).slice(0, 8)
+    }));
+    if (lessons.length) units.push({ id: 'u' + (units.length + 1) + '-' + rid().slice(0, 4), title: String(u.title || `Chapter ${units.length + 1}`).slice(0, 160), lessons });
+  }
+  if (!units.length) return null;
+  const all = units.flatMap(u => u.lessons); const N = all.length, M = S.chunkList.length;
+  all.forEach((l, i) => {
+    if (!l.sources.length) {
+      const a = Math.floor(i * M / N), b = Math.max(a + 1, Math.floor((i + 1) * M / N));
+      l.sources = S.chunkList.slice(a, Math.min(b, a + 4)).map(c => c.id);
+    }
+  });
+  return { overview: String(res.overview || '').slice(0, 700), units };
+}
+async function writeLesson(lid, fresh, label) {
+  const c = S.course;
+  const f = findLesson(lid);
+  if (!f) return;
+  const { unit, lesson } = f;
+  const material = lessonChunks(lesson);
+  if (!material.trim()) { toast('The material for this lesson was deleted. Make a new study plan under Material.', true); return; }
+  const others = unit.lessons.filter(l => l.id !== lid).map(l => `- ${l.title}`).join('\n');
+  const prompt = `You are writing a short lesson for a student studying the subject "${c.name}".
+
+Lesson: ${lesson.title}
+Learning goal: ${lesson.goal}
+Chapter: ${unit.title}
+Other lessons in this chapter (don't cover those topics in depth here):
+${others || '- none'}
+
+Rules:
+- Only use information from the source fragments below. Don't make up facts. If something is missing or the source is unclear, say so briefly.
+- Explain in simple language, with a concrete example where that helps. Length: 300 to 550 words.
+- Format in Markdown: subheadings with "## ", short paragraphs, bullet points with "- ", **bold** for key terms. No tables.
+- After a statement, put the id of the source fragment in square brackets, for example [c12].
+- Start straight away with the explanation, without repeating the title.
+- End with a "## Key points" heading (in the language you write in) and 3 to 5 short bullet points.
+- ${LANGS[c.lang] || LANGS.nl}
+
+SOURCE FRAGMENTS:
+${material}`;
+  S.stream = { lid, text: '' };
+  const res = await runAi({ kind: 'lesson', target: lid, label: label || 'Claude is writing this lesson', hint: 'The text appears below as soon as Claude starts writing. If Claude asks for permission, allow it.' },
+    signal => {
+      const opts = { signal, onText: ({ text }) => { if (S.stream) S.stream.text = text; paintStream(); } };
+      if (fresh) opts.cache = false;
+      return S.sample(prompt, opts);
+    });
+  S.stream = null;
+  if (res && res.text) {
+    S.lessonCache[lid] = res.text;
+    c.written[lid] = true;
+    Store.save(`les-${c.id}-${lid}`, { text: res.text, d: today() });
+    saveCourse();
+    if (res.truncated) toast('This lesson was cut off because it got too long. Click Rewrite for a new version.');
+  }
+  renderMain();
+  return !!(res && res.text);
+}
+let paintQueued = false;
+function paintStream() {
+  if (paintQueued) return;
+  paintQueued = true;
+  requestAnimationFrame(() => {
+    paintQueued = false;
+    const el = $('#lesson-body');
+    if (el && S.stream && S.lessonId === S.stream.lid) el.innerHTML = renderMd(S.stream.text);
+  });
+}
+async function startQuiz() {
+  const scope = ($('#quiz-scope') || {}).value || 'all';
+  const n = Number(($('#quiz-n') || {}).value || 10);
+  const info = scopeInfo(scope);
+  const c = S.course;
+  const prompt = `Make ${n} multiple-choice questions that test whether a student understands the material below.
+Rules:
+- Each question has exactly 4 answer options, exactly one of which is correct.
+- Test understanding and application, not only loose facts. Mix easy and harder questions.
+- Wrong options are believable but clearly wrong to someone who knows the material. Don't use options like "all of the above" or "neither".
+- Base everything on the fragments and give, for each question, the id of the fragment that contains the answer.
+- The explanation says in 1 to 3 sentences why the correct answer is right.
+- ${LANGS[c.lang] || LANGS.nl}
+
+Answer with only a JSON array in this form:
+[{"question":"...","options":["...","...","...","..."],"answer":0,"explanation":"...","source":"c3"}]
+"answer" is the position (0 to 3) of the correct answer in "options".
+
+STUDY MATERIAL:
+${info.material}`;
+  const res = await runAi({ kind: 'quiz', label: 'Claude is making your quiz' }, signal => S.sample.json(prompt, { signal, cache: false }));
+  if (!res) return;
+  const qs = normalizeQuiz(res);
+  if (qs.length < 2) { toast('The questions did not come through properly. Try again.', true); return; }
+  S.quiz = { scope, label: info.label, qs, i: 0, picks: [], finished: false };
+  renderMain();
+}
+function reshuffle(it) {
+  const right = it.options[it.answer];
+  const options = shuffle(it.options.slice());
+  return Object.assign({}, it, { options, answer: options.indexOf(right) });
+}
+function normalizeQuiz(res) {
+  const arr = Array.isArray(res) ? res : (res && Array.isArray(res.questions) ? res.questions : []);
+  const out = [];
+  for (const it of arr) {
+    if (!it) continue;
+    const question = String(it.question || it.q || '').trim();
+    let options = Array.isArray(it.options) ? it.options.map(o => String(o).trim()).filter(Boolean) : [];
+    const a = Number(it.answer);
+    if (!question || options.length < 2 || !Number.isInteger(a) || a < 0 || a >= options.length) continue;
+    const right = options[a];
+    options = [right, ...options.filter((o, i) => i !== a && o !== right)].slice(0, 4);
+    const src = cleanId(it.source);
+    out.push(reshuffle({ question, options, answer: 0, explanation: String(it.explanation || '').trim(), source: S.chunks.has(src) ? src : '' }));
+  }
+  return out;
+}
+async function genCards(scope) {
+  const c = S.course;
+  if (!S.chunkList.length) { toast('Add study material first.'); return; }
+  const info = scopeInfo(scope);
+  const existing = S.cards.filter(cd => scope === 'all' || cd.scope === scope || (info.unitId && cd.unitId === info.unitId)).slice(-60).map(cd => '- ' + cd.front).join('\n');
+  const prompt = `Make ${info.n} flashcards to learn and remember the material below.
+Rules:
+- Front: a term, question or situation. Short and unambiguous.
+- Back: the answer in at most 35 words.
+- Cover the most important terms, definitions, connections and examples. No duplicate cards.
+- Give the id of the source fragment for each card.
+- ${LANGS[c.lang] || LANGS.nl}
+${existing ? `These cards already exist; don't make cards about exactly the same thing:\n${existing}\n` : ''}
+Answer with only a JSON array in this form:
+[{"front":"...","back":"...","source":"c3"}]
+
+LESMATERIAAL:
+${info.material}`;
+  const res = await runAi({ kind: 'cards', label: `Claude is making flashcards: ${info.label}` }, signal => S.sample.json(prompt, { signal, cache: false }));
+  if (!res) return;
+  const arr = Array.isArray(res) ? res : (res && Array.isArray(res.cards) ? res.cards : null);
+  if (!arr) { toast('The flashcards did not come through properly. Try again.', true); return; }
+  const seen = new Set(S.cards.map(x => x.front.trim().toLowerCase()));
+  const t = today(); let added = 0;
+  for (const it of arr) {
+    if (!it || !it.front || !it.back) continue;
+    const front = String(it.front).trim().slice(0, 300);
+    if (seen.has(front.toLowerCase())) continue;
+    seen.add(front.toLowerCase());
+    const src = cleanId(it.source);
+    S.cards.push({ id: rid(), front, back: String(it.back).trim().slice(0, 600), source: S.chunks.has(src) ? src : '', scope, unitId: info.unitId || '', box: 0, seen: 0, due: t, created: t });
+    added++;
+  }
+  if (bytes(JSON.stringify({ cards: S.cards })) > 240000) {
+    S.cards.splice(S.cards.length - added, added);
+    toast('You have reached the maximum number of flashcards for this subject. Delete cards you no longer need first.', true);
+    return;
+  }
+  saveCards();
+  toast(added ? `${plural(added, 'new card', 'new cards')} added to Flashcards.` : 'No new cards were added; they already existed.');
+  renderAll();
+}
+
+/* ---------- quiz & review actions ---------- */
+function quizPick(k) {
+  const q = S.quiz; if (!q || q.finished || q.picks[q.i] != null) return;
+  if (k < 0 || k >= q.qs[q.i].options.length) return;
+  q.picks[q.i] = k;
+  renderMain();
+  requestAnimationFrame(() => { const b = $('[data-act="quiz-next"]'); if (b) b.focus({ preventScroll: true }); });
+}
+function quizNext() {
+  const q = S.quiz; if (!q || q.picks[q.i] == null) return;
+  if (q.i + 1 < q.qs.length) { q.i++; renderMain(); return; }
+  q.finished = true;
+  q.score = q.qs.reduce((a, it, k) => a + (q.picks[k] === it.answer ? 1 : 0), 0);
+  const c = S.course;
+  c.quizzes.push({ d: today(), scope: q.scope, label: q.label, score: q.score, total: q.qs.length });
+  if (c.quizzes.length > 100) c.quizzes = c.quizzes.slice(-100);
+  c.lastQuiz = { scope: q.scope, label: q.label, qs: q.qs };
+  markActivity(); saveCourse();
+  setTimeout(() => checkStickers({ quiz: q }), 500);
+  renderMain();
+  window.scrollTo({ top: 0 });
+}
+function poolQuizItems(scope) {
+  const key = !scope || scope === 'all' ? 'all' : (scope.startsWith('les:') || scope.startsWith('unit:') ? scope : 'unit:' + scope);
+  return poolFor(key).filter(e => e.type === 'choice' && Array.isArray(e.options) && e.options.length >= 2 && Number.isInteger(e.answer));
+}
+function startPoolQuiz() {
+  const scope = ($('#quiz-scope') || {}).value || 'all';
+  const n = Number(($('#quiz-n') || {}).value || 10);
+  const items = poolQuizItems(scope);
+  if (items.length < 3) { toast('There aren\'t enough saved questions for this topic yet. Pick another topic.'); return; }
+  const qs = shuffle(items.slice()).slice(0, n).map(e => reshuffle({ question: e.prompt, options: e.options.slice(), answer: e.answer, explanation: e.explain || '', source: e.source || '' }));
+  S.quiz = { scope, label: scopeInfo(scope).label, qs, i: 0, picks: [], finished: false };
+  renderMain();
+}
+function quizAgain() {
+  const src = (S.quiz && S.quiz.qs) ? S.quiz : S.course.lastQuiz;
+  if (!src) return;
+  S.quiz = { scope: src.scope, label: src.label, qs: src.qs.map(reshuffle), i: 0, picks: [], finished: false };
+  renderMain();
+}
+function startReview(all) {
+  const t = today();
+  let list = all ? shuffle(S.cards.slice()) : shuffle(S.cards.filter(x => x.due <= t)).sort((a, b) => a.box - b.box);
+  list = list.slice(0, 40);
+  if (!list.length) { toast('There are no cards to review right now.'); return; }
+  S.review = { queue: list.map(x => x.id), i: 0, flipped: false, seen: [], done: false };
+  renderMain();
+}
+function flip() {
+  const r = S.review; if (!r || r.done) return;
+  r.flipped = !r.flipped;
+  const el = $('.fc');
+  if (el) { el.classList.toggle('flipped', r.flipped); el.setAttribute('aria-label', r.flipped ? 'Answer. Click to see the question.' : 'Question. Click to see the answer.'); }
+  const rate = $('.rate'), hint = $('.flip-hint');
+  if (rate) rate.hidden = !r.flipped;
+  if (hint) hint.hidden = r.flipped;
+}
+function rate(kind) {
+  const r = S.review; if (!r || r.done || !r.flipped) return;
+  const id = r.queue[r.i];
+  const card = S.cards.find(x => x.id === id);
+  const t = today();
+  if (card) {
+    card.seen = (card.seen || 0) + 1; card.last = t;
+    if (kind === 'again') { card.box = 0; card.due = t; r.queue.splice(Math.min(r.queue.length, r.i + 4), 0, id); }
+    else if (kind === 'hard') { card.box = Math.max(1, card.box); card.due = addDays(t, Math.max(1, Math.ceil(INTERVALS[card.box] / 2))); }
+    else { card.box = Math.min(5, card.box + 1); card.due = addDays(t, INTERVALS[card.box]); }
+  }
+  if (!r.seen.includes(id)) r.seen.push(id);
+  r.i++; r.flipped = false;
+  if (r.i >= r.queue.length) r.done = true;
+  if (S.course) S.course.reviews = (S.course.reviews || 0) + 1;
+  saveCards(); markActivity();
+  checkStickers({});
+  renderAll();
+}
+
+/* ---------- Roosje (mascot) & stickers ---------- */
+const PLUM = '#2B1B3D';
+function mascot(mood = 'happy', size = 80) {
+  const P = PLUM, body = '#FF9CC8', deep = '#FF6FAE', nose = '#FF4F93';
+  const eyes = {
+    happy: `<ellipse cx="44" cy="53" rx="6.5" ry="8" fill="${P}"/><ellipse cx="76" cy="53" rx="6.5" ry="8" fill="${P}"/><circle cx="46.2" cy="49.5" r="2.5" fill="#fff"/><circle cx="78.2" cy="49.5" r="2.5" fill="#fff"/>`,
+    cheer: `<path d="M37 55 q7 -10 14 0 M69 55 q7 -10 14 0" stroke="${P}" stroke-width="4" fill="none" stroke-linecap="round"/>`,
+    sad: `<ellipse cx="44" cy="54" rx="6" ry="7.5" fill="${P}"/><ellipse cx="76" cy="54" rx="6" ry="7.5" fill="${P}"/><circle cx="45.8" cy="50.5" r="2.3" fill="#fff"/><circle cx="77.8" cy="50.5" r="2.3" fill="#fff"/><path d="M36 43 L49 39 M84 43 L71 39" stroke="${P}" stroke-width="3" stroke-linecap="round"/>`,
+    think: `<ellipse cx="44" cy="53" rx="6.5" ry="8" fill="${P}"/><ellipse cx="76" cy="53" rx="6.5" ry="8" fill="${P}"/><circle cx="42" cy="48.5" r="2.5" fill="#fff"/><circle cx="74" cy="48.5" r="2.5" fill="#fff"/>`
+  }[mood] || '';
+  const mouth = mood === 'cheer'
+    ? `<path d="M51 66 q9 14 18 0 z" fill="#7A2147" stroke="${P}" stroke-width="3" stroke-linejoin="round"/>`
+    : mood === 'think' ? `<circle cx="62" cy="70" r="3" fill="${P}"/>`
+    : `<path d="M53 67 q3.5 4.5 7 0 q3.5 4.5 7 0" stroke="${P}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  const extra = mood === 'cheer'
+    ? `<g fill="#FFD23F" stroke="${P}" stroke-width="2" stroke-linejoin="round"><path d="M12 14 l3 7 l7 3 l-7 3 l-3 7 l-3 -7 l-7 -3 l7 -3 z"/><path d="M108 30 l2 5 l5 2 l-5 2 l-2 5 l-2 -5 l-5 -2 l5 -2 z"/></g>`
+    : mood === 'think' ? `<g fill="#fff" stroke="${P}" stroke-width="2"><circle cx="100" cy="24" r="3"/><circle cx="108" cy="13" r="4.5"/></g>` : '';
+  return `<svg class="mascot ${mood}" viewBox="0 0 120 120" width="${size}" height="${size}" aria-hidden="true">
+    <path d="M82 104 C 104 104 110 84 100 72" stroke="${P}" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <path d="M82 104 C 104 104 110 84 100 72" stroke="${body}" stroke-width="7.5" fill="none" stroke-linecap="round"/>
+    <ellipse cx="60" cy="100" rx="27" ry="17" fill="${body}" stroke="${P}" stroke-width="3.5"/>
+    <ellipse cx="60" cy="104" rx="14" ry="8" fill="#FFD2E6"/>
+    <ellipse cx="47" cy="113" rx="8" ry="5" fill="${body}" stroke="${P}" stroke-width="3"/>
+    <ellipse cx="73" cy="113" rx="8" ry="5" fill="${body}" stroke="${P}" stroke-width="3"/>
+    <g transform="translate(70 24) rotate(-22)"><rect x="-6" y="-4" width="6" height="8" rx="1.5" fill="${deep}" stroke="${P}" stroke-width="2.5"/><rect x="0" y="-4" width="32" height="8" fill="#FFD23F" stroke="${P}" stroke-width="2.5"/><path d="M32 -4 L41 0 L32 4 Z" fill="#F7D9B5" stroke="${P}" stroke-width="2.5" stroke-linejoin="round"/></g>
+    <g stroke="${P}" stroke-width="3.5" stroke-linejoin="round"><path d="M28 44 L30 12 L54 30 Z" fill="${body}"/><path d="M92 44 L90 12 L66 30 Z" fill="${body}"/></g>
+    <path d="M33 36 L34 19 L47 30 Z M87 36 L86 19 L73 30 Z" fill="${deep}"/>
+    <ellipse cx="60" cy="54" rx="40" ry="32" fill="${body}" stroke="${P}" stroke-width="3.5"/>
+    <path d="M52 25 l2 8 M60 23 v9 M68 25 l-2 8" stroke="${deep}" stroke-width="3.5" stroke-linecap="round"/>
+    <ellipse cx="32" cy="66" rx="7" ry="4.5" fill="${nose}" opacity=".35"/><ellipse cx="88" cy="66" rx="7" ry="4.5" fill="${nose}" opacity=".35"/>
+    ${eyes}
+    <path d="M56.5 62 h7 l-3.5 4.5 z" fill="${nose}" stroke="${P}" stroke-width="2" stroke-linejoin="round"/>
+    ${mouth}
+    <path d="M23 60 L10 57 M23 66 L11 69 M97 60 L110 57 M97 66 L109 69" stroke="${P}" stroke-width="2.5" stroke-linecap="round"/>
+    ${extra}
+  </svg>`;
+}
+function buddy(mood, size, text) {
+  return `<div class="buddy">${mascot(mood, size)}<p class="bubble">${text}</p></div>`;
+}
+const FLAME = 'M50 92 C 26 92 16 74 20 58 C 24 44 36 38 34 18 C 50 26 56 40 54 50 C 60 46 62 38 60 28 C 76 40 84 58 80 72 C 76 84 64 92 50 92 Z';
+const INNER_FLAME = '<path d="M50 86 C 40 86 34 78 37 69 C 40 61 47 59 47 50 C 55 56 61 64 61 72 C 61 80 57 86 50 86 Z" fill="#FFD23F" stroke="#2B1B3D" stroke-width="3.5" stroke-linejoin="round"/>';
+const STICKERS = [
+  { id: 'eerste', name: 'First practice', desc: 'Finish your first practice round.', test: c => (c.sessions || 0) >= 1,
+    shapes: [{ d: 'M50 8 L61 36 L91 37 L67 56 L76 86 L50 69 L24 86 L33 56 L9 37 L39 36 Z', f: '#FFD23F' }], face: [50, 52, 0.85] },
+  { id: 'les1', name: 'First lesson', desc: 'Mark a lesson as learned.', test: c => Object.keys(c.done || {}).length >= 1,
+    shapes: [{ d: 'M12 24 C 28 16 42 18 50 28 C 58 18 72 16 88 24 L88 82 C 72 74 58 76 50 86 C 42 76 28 74 12 82 Z', f: '#9B6BFF' }],
+    detail: '<path d="M50 28 V86 M22 38 C30 34 38 35 44 40 M22 52 C30 48 38 49 44 54 M78 38 C70 34 62 35 56 40 M78 52 C70 48 62 49 56 54" stroke="#2B1B3D" stroke-width="3" fill="none" stroke-linecap="round"/>' },
+  { id: 'foutloos', name: 'Flawless', desc: 'Finish a practice round without mistakes.', test: (c, x) => !!(x.session && x.session.bonus),
+    shapes: [{ d: 'M50 88 C 20 68 6 50 12 32 C 18 14 42 12 50 30 C 58 12 82 14 88 32 C 94 50 80 68 50 88 Z', f: '#FF6FAE' }], face: [50, 48, 0.9] },
+  { id: 'dagdoel', name: 'Bullseye!', desc: 'Reach your daily XP goal.', test: c => (c.xp[today()] || 0) >= c.goal,
+    shapes: [{ c: [50, 50, 42], f: '#4CC3FF' }],
+    detail: '<circle cx="50" cy="50" r="28" fill="#fff" stroke="#2B1B3D" stroke-width="4"/><circle cx="50" cy="50" r="13" fill="#FF6FAE" stroke="#2B1B3D" stroke-width="4"/><path d="M50 50 L78 22 M78 22 l1 -9 M78 22 l9 -1" stroke="#2B1B3D" stroke-width="5" stroke-linecap="round"/>' },
+  { id: 'combo10', name: 'Lightning fast', desc: 'Get 10 exercises right in a row.', test: (c, x) => !!(x.session && x.session.maxCombo >= 10),
+    shapes: [{ d: 'M60 6 L22 56 H46 L36 94 L80 40 H56 L68 6 Z', f: '#FFD23F' }] },
+  { id: 'xp100', name: 'Sparkle', desc: 'Collect 100 XP.', test: c => totalXp(c) >= 100,
+    shapes: [{ d: 'M28 20 H72 L92 42 L50 90 L8 42 Z', f: '#4CC3FF' }],
+    detail: '<path d="M8 42 H92 M28 20 L38 42 L50 90 L62 42 L72 20 M38 42 L50 20 L62 42" stroke="#2B1B3D" stroke-width="3" fill="none" stroke-linejoin="round"/><path d="M22 35 l6 -7" stroke="#fff" stroke-width="4" stroke-linecap="round"/>' },
+  { id: 'xp500', name: 'Crown', desc: 'Collect 500 XP.', test: c => totalXp(c) >= 500,
+    shapes: [{ d: 'M14 80 L10 32 L32 52 L50 22 L68 52 L90 32 L86 80 Z', f: '#FFD23F' }, { c: [10, 30, 7], f: '#FF6FAE' }, { c: [50, 20, 7], f: '#4CC3FF' }, { c: [90, 30, 7], f: '#FF6FAE' }],
+    detail: '<path d="M15 68 H85" stroke="#2B1B3D" stroke-width="4"/>' },
+  { id: 'reeks3', name: 'On a roll', desc: 'Study 3 days in a row.', test: c => streak(c) >= 3,
+    shapes: [{ d: FLAME, f: '#FF8A3D' }], detail: INNER_FLAME },
+  { id: 'reeks7', name: 'Super streak', desc: 'Study 7 days in a row.', test: c => streak(c) >= 7,
+    shapes: [{ d: FLAME, f: '#9B6BFF' }], detail: INNER_FLAME.replace('#FFD23F', '#4CC3FF') },
+  { id: 'vijfdagen', name: 'Paw print', desc: 'Study on 5 different days.', test: c => (c.activity || []).length >= 5,
+    shapes: [{ d: 'M50 90 C 30 90 24 77 29 66 C 34 56 44 54 50 54 C 56 54 66 56 71 66 C 76 77 70 90 50 90 Z', f: '#FF9CC8' }, { c: [22, 44, 10], f: '#FF9CC8' }, { c: [38, 26, 10], f: '#FF9CC8' }, { c: [62, 26, 10], f: '#FF9CC8' }, { c: [78, 44, 10], f: '#FF9CC8' }] },
+  { id: 'hoofdstuk', name: 'Rainbow', desc: 'Learn every lesson in a chapter.', test: c => !!(c.plan && c.plan.units.some(u => u.lessons.length && u.lessons.every(l => c.done[l.id]))),
+    shapes: [{ d: 'M6 80 A44 44 0 0 1 94 80 H80 A30 30 0 0 0 20 80 Z', f: '#FF6FAE' }, { d: 'M20 80 A30 30 0 0 1 80 80 H66 A16 16 0 0 0 34 80 Z', f: '#FFD23F' }, { d: 'M34 80 A16 16 0 0 1 66 80 H56 A6 6 0 0 0 44 80 Z', f: '#4CC3FF' }, { c: [14, 80, 11], f: '#fff' }, { c: [28, 85, 9], f: '#fff' }, { c: [86, 80, 11], f: '#fff' }, { c: [72, 85, 9], f: '#fff' }] },
+  { id: 'quiz100', name: 'Quiz champion', desc: 'Score 100% on a quiz of at least 5 questions.', test: (c, x) => !!(x.quiz && x.quiz.qs.length >= 5 && x.quiz.score === x.quiz.qs.length),
+    shapes: [{ d: 'M28 4 H44 L58 40 H42 Z', f: '#4CC3FF' }, { d: 'M72 4 H56 L42 40 H58 Z', f: '#FF6FAE' }, { c: [50, 64, 28], f: '#FFD23F' }], face: [50, 63, 0.75] },
+  { id: 'fouten', name: 'Mistake catcher', desc: 'Review your mistakes until the list is empty.', test: (c, x) => !!(x.session && x.session.scope === 'mistakes' && c.mistakes.length === 0),
+    shapes: [{ c: [50, 50, 42], f: '#3DDC97' }], detail: '<path d="M28 52 L44 68 L74 34" stroke="#2B1B3D" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' },
+  { id: 'kaarten50', name: 'Bright idea', desc: 'Review 50 flashcards.', test: c => (c.reviews || 0) >= 50,
+    shapes: [{ d: 'M50 8 C 28 8 16 26 20 44 C 23 56 34 60 35 72 H65 C 66 60 77 56 80 44 C 84 26 72 8 50 8 Z', f: '#FFD23F' }, { d: 'M36 76 H64 V84 C 64 90 60 94 54 94 H46 C 40 94 36 90 36 84 Z', f: '#C9B8DE' }],
+    detail: '<path d="M38 83 H62" stroke="#2B1B3D" stroke-width="3"/>', face: [50, 40, 0.8] }
+];
+const ROT = [-6, 5, -3, 7, -5, 3, -8, 4, -2, 6, -4, 8, -7, 2];
+function shapeTag(sh, fill) {
+  if (sh.c) return `<circle cx="${sh.c[0]}" cy="${sh.c[1]}" r="${sh.c[2]}" fill="${fill}"/>`;
+  return `<path d="${sh.d}" fill="${fill}"/>`;
+}
+function kawaii(cx, cy, s) {
+  return `<g fill="${PLUM}"><circle cx="${cx - 9 * s}" cy="${cy}" r="${3.4 * s}"/><circle cx="${cx + 9 * s}" cy="${cy}" r="${3.4 * s}"/></g><path d="M${cx - 5 * s} ${cy + 6 * s} q${5 * s} ${5 * s} ${10 * s} 0" stroke="${PLUM}" stroke-width="${3 * s}" fill="none" stroke-linecap="round"/><g fill="#FF4F93" opacity=".45"><ellipse cx="${cx - 15 * s}" cy="${cy + 5 * s}" rx="${4.5 * s}" ry="${3 * s}"/><ellipse cx="${cx + 15 * s}" cy="${cy + 5 * s}" rx="${4.5 * s}" ry="${3 * s}"/></g>`;
+}
+function stickerSvg(st, size) {
+  return `<svg viewBox="-9 -9 118 118" width="${size}" height="${size}" aria-hidden="true"><g stroke="#fff" stroke-width="16" stroke-linejoin="round">${st.shapes.map(sh => shapeTag(sh, '#fff')).join('')}</g><g stroke="${PLUM}" stroke-width="4" stroke-linejoin="round">${st.shapes.map(sh => shapeTag(sh, sh.f)).join('')}</g>${st.detail || ''}${st.face ? kawaii(...st.face) : ''}</svg>`;
+}
+
+function totalXp(c) { return Object.values(c.xp || {}).reduce((a, b) => a + b, 0); }
+function checkStickers(ctx = {}) {
+  const c = S.course;
+  if (!c) return [];
+  c.stickers = c.stickers || {};
+  const earned = [];
+  for (const st of STICKERS) {
+    if (c.stickers[st.id]) continue;
+    let ok = false;
+    try { ok = st.test(c, ctx); } catch (e) { ok = false; }
+    if (ok) { c.stickers[st.id] = today(); earned.push(st); }
+  }
+  if (earned.length) { saveCourse(); celebrate(earned); renderSide(); }
+  return earned;
+}
+const celebrateQueue = [];
+let celebrating = false;
+function celebrate(list) { celebrateQueue.push(list); if (!celebrating) nextCelebration(); }
+function nextCelebration() {
+  const list = celebrateQueue.shift();
+  if (!list) { celebrating = false; return; }
+  celebrating = true;
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const colors = ['#FF6FAE', '#FFD23F', '#4CC3FF', '#9B6BFF', '#3DDC97'];
+  const conf = reduce ? '' : Array.from({ length: 44 }, (_, i) => `<i style="left:${(Math.random() * 100).toFixed(1)}%;background:${colors[i % 5]};animation-delay:${(Math.random() * 0.5).toFixed(2)}s;animation-duration:${(1.4 + Math.random() * 1.2).toFixed(2)}s"></i>`).join('');
+  const dlg = document.createElement('dialog');
+  dlg.className = 'celebrate';
+  dlg.setAttribute('aria-label', list.length > 1 ? 'New stickers' : 'New sticker');
+  dlg.innerHTML = `<div class="confetti" aria-hidden="true">${conf}</div><form method="dialog" class="cel-body">${mascot('cheer', 104)}<h2>${list.length > 1 ? 'New stickers!' : 'New sticker!'}</h2>
+    <div class="cel-stickers">${list.map((st, i) => `<figure class="stk got"><span class="sticker" style="--r:${ROT[i % ROT.length]}deg">${stickerSvg(st, 112)}</span><figcaption><strong>${esc(st.name)}</strong><span>${esc(st.desc)}</span></figcaption></figure>`).join('')}</div>
+    <p class="muted">Roosje stuck ${list.length > 1 ? 'them' : 'it'} in your sticker album. You'll find the album under Progress.</p>
+    <div class="dlg-actions"><button class="btn primary" value="ok" autofocus>Yay!</button></div></form>`;
+  document.body.appendChild(dlg);
+  dlg.addEventListener('close', () => { dlg.remove(); setTimeout(nextCelebration, 150); });
+  dlg.showModal();
+  Sound.play('good');
+}
+function albumHtml(c) {
+  const got = STICKERS.filter(st => c.stickers && c.stickers[st.id]).length;
+  return `<section class="album-sec"><h3>Sticker album</h3><p class="muted small" style="font-weight:700">${got} of ${STICKERS.length} stickers collected. Earn them by learning, practising and keeping it up.</p>
+    <div class="album">${STICKERS.map((st, i) => (c.stickers && c.stickers[st.id])
+      ? `<figure class="stk got"><span class="sticker" style="--r:${ROT[i % ROT.length]}deg">${stickerSvg(st, 92)}</span><figcaption><strong>${esc(st.name)}</strong><span>${esc(st.desc)}</span></figcaption></figure>`
+      : `<figure class="stk"><span class="sticker-empty" aria-hidden="true">?</span><figcaption><strong>${esc(st.name)}</strong><span>${esc(st.desc)}</span></figcaption></figure>`).join('')}</div></section>`;
+}
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+/* ---------- practice: short interactive exercises ---------- */
+const Sound = {
+  ctx: null,
+  on: (() => { try { return localStorage.getItem('blokboek-sound') !== 'off'; } catch (e) { return true; } })(),
+  toggle() { this.on = !this.on; try { localStorage.setItem('blokboek-sound', this.on ? 'on' : 'off'); } catch (e) { /* ignore */ } },
+  play(kind) {
+    if (!this.on) return;
+    try {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      this.ctx = this.ctx || new AC();
+      const ctx = this.ctx;
+      if (ctx.state === 'suspended') ctx.resume();
+      const seq = { good: [660, 880], bad: [196, 165], tick: [990], done: [523, 659, 784, 1047] }[kind] || [];
+      seq.forEach((f, i) => {
+        const o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = kind === 'bad' ? 'triangle' : 'sine';
+        o.frequency.value = f;
+        const t = ctx.currentTime + i * 0.09;
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(kind === 'tick' ? 0.04 : 0.1, t + 0.012);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + (kind === 'bad' ? 0.22 : 0.16));
+        o.connect(g); g.connect(ctx.destination);
+        o.start(t); o.stop(t + 0.26);
+      });
+    } catch (e) { /* no sound available */ }
+  }
+};
+const PX_LABEL = { choice: 'Choose the right answer', truefalse: 'True or false?', gap: 'Fill in the missing word', order: 'Put in the right order', match: 'Match the pairs', sort: 'Sort', type: 'Type the answer' };
+const PRAISE = ['Correct!', 'Nice!', 'Well done!', 'Spot on!', 'Great!'];
+
+function strArr(a, min, max) {
+  if (!Array.isArray(a)) return null;
+  const out = a.map(x => String(x ?? '').trim()).filter(Boolean);
+  return out.length >= min ? out.slice(0, max) : null;
+}
+function normEx(o) {
+  if (!o || typeof o !== 'object') return null;
+  const type = String(o.type || '').toLowerCase().trim();
+  const src = cleanId(o.source);
+  const ex = { type, explain: String(o.explain || o.explanation || '').trim().slice(0, 400), source: S.chunks.has(src) ? src : '' };
+  const prompt = String(o.prompt || o.question || '').trim().slice(0, 300);
+  if (type === 'choice') {
+    const opts = strArr(o.options, 2, 6); const a = Number(o.answer);
+    if (!prompt || !opts || !Number.isInteger(a) || a < 0 || a >= opts.length) return null;
+    const right = opts[a];
+    const options = shuffle([right, ...opts.filter((x, i) => i !== a && x !== right)].slice(0, 4));
+    return Object.assign(ex, { prompt, options, answer: options.indexOf(right) });
+  }
+  if (type === 'truefalse') {
+    const st = String(o.statement || o.prompt || '').trim();
+    let a = o.answer;
+    if (typeof a === 'string') a = /^(true|juist|waar|ja)$/i.test(a.trim()) ? true : /^(false|onjuist|niet waar|nee)$/i.test(a.trim()) ? false : null;
+    if (!st || typeof a !== 'boolean') return null;
+    return Object.assign(ex, { statement: st.slice(0, 300), answer: a });
+  }
+  if (type === 'gap') {
+    const text = String(o.text || '').replace(/_{2,}/g, '___').trim();
+    const answer = String(o.answer || '').trim();
+    const dis = (strArr(o.distractors, 1, 6) || []).filter(d => d.toLowerCase() !== answer.toLowerCase());
+    if (!answer || text.split('___').length !== 2 || !dis.length) return null;
+    return Object.assign(ex, { text: text.slice(0, 300), answer, distractors: [...new Set(dis)].slice(0, 4) });
+  }
+  if (type === 'order') {
+    const items = strArr(o.items, 3, 8);
+    if (!items || new Set(items).size !== items.length) return null;
+    return Object.assign(ex, { prompt: prompt || 'Put in the right order', items });
+  }
+  if (type === 'match') {
+    if (!Array.isArray(o.pairs)) return null;
+    const pairs = o.pairs.filter(p => Array.isArray(p) && p.length >= 2).map(p => [String(p[0]).trim(), String(p[1]).trim()]).filter(p => p[0] && p[1]).slice(0, 5);
+    const L = new Set(pairs.map(p => p[0].toLowerCase())), R = new Set(pairs.map(p => p[1].toLowerCase()));
+    if (pairs.length < 3 || L.size !== pairs.length || R.size !== pairs.length) return null;
+    return Object.assign(ex, { prompt: prompt || 'Match the pairs', pairs });
+  }
+  if (type === 'sort') {
+    const groups = strArr(o.groups, 2, 3);
+    if (!groups || !Array.isArray(o.items)) return null;
+    const items = o.items.filter(it => Array.isArray(it) && it.length >= 2).map(it => [String(it[0]).trim(), Number(it[1])])
+      .filter(it => it[0] && Number.isInteger(it[1]) && it[1] >= 0 && it[1] < groups.length).slice(0, 8);
+    if (items.length < 3 || new Set(items.map(i => i[1])).size < 2) return null;
+    return Object.assign(ex, { prompt: prompt || 'Sort into the right group', groups, items });
+  }
+  if (type === 'type') {
+    const answers = (strArr(o.answers || (o.answer ? [o.answer] : null), 1, 6) || []).filter(a => a.length <= 60);
+    if (!prompt || !answers.length) return null;
+    return Object.assign(ex, { prompt, answers });
+  }
+  return null;
+}
+function normAns(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim(); }
+function lev(a, b) {
+  if (Math.abs(a.length - b.length) > 2) return 3;
+  let prev = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) {
+    const cur = [i];
+    for (let j = 1; j <= b.length; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    prev = cur;
+  }
+  return prev[b.length];
+}
+function exKey(ex) { return ex.type + '|' + (ex.prompt || ex.statement || ex.text || ''); }
+function cleanEx(ex) { const o = Object.assign({}, ex); delete o.uid; delete o.retry; delete o.tries; return o; }
+function newSession(scope, label, key, target) {
+  return { id: rid(), scope, label, key, target, queue: [], pos: 0, added: 0, solved: 0, firstOk: 0, firstTotal: 0, combo: 0, maxCombo: 0, xp: 0, wrong: [], fixed: [], phase: 'answer', ui: null, result: null, generating: false, waiting: true, done: false };
+}
+function practiceScope(scope) {
+  const c = S.course;
+  if (scope.startsWith('les:') && c.plan) {
+    const f = findLesson(scope.slice(4));
+    if (f) return { material: lessonChunks(f.lesson, 30000), label: f.lesson.title, key: f.lesson.id, n: 10 };
+  }
+  if (scope.startsWith('unit:') && c.plan) {
+    const u = c.plan.units.find(x => x.id === scope.slice(5));
+    if (u) {
+      const ids = new Set(u.lessons.flatMap(l => l.sources));
+      const list = S.chunkList.filter(ch => ids.has(ch.id));
+      if (list.length) return { material: materialText(list, 50000), label: u.title, key: u.id, n: 12 };
+    }
+  }
+  return { material: materialText(S.chunkList, 70000), label: 'Whole subject', key: 'all', n: 12 };
+}
+function pxAdd(sess, obj) {
+  const ex = normEx(obj);
+  if (!ex) return;
+  const k = exKey(ex);
+  if (sess.queue.some(q => exKey(q) === k)) return;
+  ex.uid = rid();
+  sess.queue.push(ex); sess.added++;
+  if (S.prac === sess && sess.waiting && sess.pos < sess.queue.length) { sess.waiting = false; renderMain(); }
+}
+function pxParseLine(sess, line) {
+  const l = String(line || '').trim().replace(/^```\w*$/, '').replace(/^(\d+[.)]|[-*•])\s+/, '').replace(/,\s*$/, '');
+  if (!l || (l[0] !== '{' && l[0] !== '[')) return;
+  try {
+    const v = JSON.parse(l);
+    if (Array.isArray(v)) v.forEach(o => pxAdd(sess, o));
+    else if (v && Array.isArray(v.exercises)) v.exercises.forEach(o => pxAdd(sess, o));
+    else pxAdd(sess, v);
+  } catch (e) { /* incomplete line */ }
+}
+function practicePrompt(c, info) {
+  return `You are making a practice set of short, interactive exercises for a student studying the subject "${c.name}". Topic: ${info.label}.
+
+Make ${info.n} exercises. Vary the formats and use each format at least once if the material allows it. Start with the easiest exercises and build up.
+
+The formats, with exactly these JSON fields:
+{"type":"choice","prompt":"question","options":["a","b","c","d"],"answer":0,"explain":"...","source":"c3"}
+{"type":"truefalse","statement":"statement","answer":true,"explain":"...","source":"c3"}
+{"type":"gap","text":"A sentence with ___ in place of one missing word.","answer":"word","distractors":["wrong1","wrong2","wrong3"],"explain":"...","source":"c3"}
+{"type":"order","prompt":"Put the steps in the right order","items":["first","second","third"],"explain":"...","source":"c3"}
+{"type":"match","prompt":"Match each term to its meaning","pairs":[["term","meaning"],["term","meaning"],["term","meaning"],["term","meaning"]],"source":"c3"}
+{"type":"sort","prompt":"Sort: ...","groups":["group A","group B"],"items":[["example",0],["example",1],["example",0],["example",1]],"explain":"...","source":"c3"}
+{"type":"type","prompt":"question with an answer of 1 to 3 words","answers":["answer","accepted variant"],"explain":"...","source":"c3"}
+
+Rules:
+- Base everything on the source fragments below and don't make up facts. Check every answer carefully: a wrong answer is worse than one exercise fewer.
+- For "order", list the items in the CORRECT order; the app shuffles them itself. Only use "order" when the order is really fixed: steps of a process, or the words of a short key sentence.
+- For "gap", the wrong words fit the sentence grammatically but are wrong in content. There is exactly one ___.
+- For "sort": 4 to 8 items, each belonging to exactly one group (group 0, 1 or 2).
+- For "match": 4 or 5 short pairs.
+- For "type": only questions with a short, unambiguous answer; also give common variants in "answers".
+- "explain" says in 1 or 2 sentences why the answer is right. "source" is the id of the source fragment.
+- ${LANGS[c.lang] || LANGS.nl}
+
+Write each exercise as one JSON object on its own line. No bullets, no numbering, no code block and no other text.
+
+SOURCE FRAGMENTS:
+${info.material}`;
+}
+async function startPractice(scope) {
+  const c = S.course;
+  if (!S.chunkList.length) { toast('Add study material first.'); return; }
+  if (!S.sample || !S.ai) { startPoolPractice(scope); return; }
+  if (S.busy) { toast('Claude is still busy. Wait a moment or click Stop.'); return; }
+  const info = practiceScope(scope);
+  const prompt = practicePrompt(c, info);
+  const sess = newSession(scope, info.label, info.key, info.n);
+  sess.generating = true;
+  const ctl = new AbortController();
+  S.prac = sess;
+  S.busy = { kind: 'practice', label: 'Opdrachten maken', ctl };
+  renderAll();
+  window.scrollTo({ top: 0 });
+  let pending = '', failed = false;
+  try {
+    const res = await S.sample(prompt, {
+      signal: ctl.signal, cache: false,
+      onText: ({ delta }) => {
+        const lines = (pending + delta).split('\n');
+        pending = lines.pop();
+        for (const l of lines) pxParseLine(sess, l);
+      }
+    });
+    pxParseLine(sess, pending); pending = '';
+    if (!sess.added && res && res.text) {
+      const t = res.text.replace(/```\w*/g, '');
+      const a = t.indexOf('['), b = t.lastIndexOf(']');
+      if (a >= 0 && b > a) { try { JSON.parse(t.slice(a, b + 1)).forEach(o => pxAdd(sess, o)); } catch (e) { /* ignore */ } }
+    }
+  } catch (e) {
+    if (pending) pxParseLine(sess, pending);
+    if (!(e && e.code === 'cancelled') && S.prac === sess) {
+      failed = true;
+      toast(sess.added ? 'Not all exercises could be made. You practise with what there is.' : aiErrorText(e), !sess.added);
+    }
+  } finally {
+    if (S.busy && S.busy.ctl === ctl) S.busy = null;
+    sess.generating = false;
+    if (S.prac === sess) {
+      if (!sess.added) {
+        S.prac = null; S.tab = 'practice';
+        if (!failed) toast('The exercises did not come through properly. Try again.', true);
+      } else {
+        sess.target = sess.added;
+        if (sess.waiting && sess.pos >= sess.queue.length) pxFinish();
+      }
+    }
+    if (sess.added) poolAddMany(sess.queue, sess.key);
+    renderAll();
+  }
+}
+function startMistakes() {
+  const c = S.course;
+  if (S.busy) { toast('Claude is still busy. Wait a moment or click Stop.'); return; }
+  if (!c.mistakes.length) { toast('You have no mistakes to review. Well done!'); return; }
+  const sess = newSession('mistakes', 'Je fouten', null, 0);
+  shuffle(c.mistakes.slice()).slice(0, 12).forEach(ex => { const e = clone(ex); e.uid = rid(); sess.queue.push(e); sess.added++; });
+  sess.target = sess.added; sess.waiting = false;
+  S.prac = sess;
+  renderAll();
+  window.scrollTo({ top: 0 });
+}
+async function quitPractice() {
+  const s = S.prac;
+  if (!s) return;
+  if (s.solved > 0 && !s.done && !await confirmDlg('Stop practising? The XP from this round will not be saved.', 'Stop practising')) return;
+  if (S.busy && S.busy.kind === 'practice') S.busy.ctl.abort();
+  S.prac = null; S.tab = 'practice';
+  renderAll();
+}
+function pxInitUi(ex) {
+  switch (ex.type) {
+    case 'gap': return { sel: null, tiles: shuffle([ex.answer, ...ex.distractors]) };
+    case 'order': {
+      let tiles;
+      for (let n = 0; n < 6; n++) { tiles = shuffle(ex.items.map((t, i) => ({ t, i }))); if (tiles.some((x, k) => x.i !== k)) break; }
+      return { tiles, line: [] };
+    }
+    case 'match': return { L: shuffle(ex.pairs.map((p, i) => i)), R: shuffle(ex.pairs.map((p, i) => i)), selL: null, selR: null, done: [], mistakes: 0, flash: null };
+    case 'sort': return { order: shuffle(ex.items.map((it, i) => i)), place: {}, sel: null };
+    case 'type': return { value: '' };
+    default: return { sel: null };
+  }
+}
+function pxCanCheck(ex, ui) {
+  switch (ex.type) {
+    case 'choice': case 'truefalse': case 'gap': return ui.sel != null;
+    case 'order': return ui.line.length === ex.items.length;
+    case 'sort': return ex.items.every((it, i) => ui.place[i] != null);
+    case 'type': return true;
+  }
+  return false;
+}
+function pxCorrectText(ex) {
+  switch (ex.type) {
+    case 'choice': return ex.options[ex.answer];
+    case 'truefalse': return ex.answer ? 'True' : 'False';
+    case 'gap': return ex.text.replace('___', ex.answer);
+    case 'order': return ex.items.every(t => !/\s/.test(t)) ? ex.items.join(' ') : ex.items.map((t, i) => `${i + 1}. ${t}`).join('   ');
+    case 'sort': return ex.groups.map((g, gi) => `${g}: ${ex.items.filter(it => it[1] === gi).map(it => it[0]).join(', ')}`).join('. ');
+    case 'type': return ex.answers[0];
+  }
+  return '';
+}
+function pxGrade(ex, ui) {
+  switch (ex.type) {
+    case 'choice': case 'truefalse': return { ok: ui.sel === ex.answer };
+    case 'gap': return { ok: ui.tiles[ui.sel] === ex.answer };
+    case 'order': return { ok: ui.line.every((k, i) => ui.tiles[k].t === ex.items[i]) };
+    case 'sort': return { ok: ex.items.every((it, i) => ui.place[i] === it[1]) };
+    case 'match': return { ok: ui.mistakes === 0, note: ui.mistakes ? `Je koppelde ${ui.mistakes} keer verkeerd.` : '' };
+    case 'type': {
+      const v = normAns(ui.value);
+      const accepted = ex.answers.map(normAns);
+      if (accepted.includes(v)) return { ok: true };
+      const ci = accepted.findIndex(a => a.length >= 4 && lev(v, a) <= 1);
+      if (ci >= 0) return { ok: true, note: `Watch the spelling: ${ex.answers[ci]}.` };
+      return { ok: false };
+    }
+  }
+  return { ok: false };
+}
+function pxCheck(skip) {
+  const s = S.prac;
+  if (!s || s.phase !== 'answer' || s.pos >= s.queue.length || !s.ui) return;
+  const ex = s.queue[s.pos];
+  if (ex.type === 'type') {
+    const inp = $('#type-ans');
+    if (inp) s.ui.value = inp.value;
+    if (!skip && !s.ui.value.trim()) { toast('Type an answer first.'); return; }
+  }
+  if (!skip && !pxCanCheck(ex, s.ui)) return;
+  pxResolve(skip ? { ok: false } : pxGrade(ex, s.ui), skip);
+}
+function pxResolve(g, skip) {
+  const s = S.prac;
+  const ex = s.queue[s.pos];
+  s.phase = 'feedback';
+  s.result = {
+    ok: g.ok, note: g.note || '',
+    correct: ex.type === 'match' ? '' : pxCorrectText(ex),
+    head: g.ok ? PRAISE[Math.floor(Math.random() * PRAISE.length)] : (skip ? 'No problem. Here\'s how it works:' : 'Not quite.')
+  };
+  const addNote = t => { s.result.note = s.result.note ? s.result.note + ' ' + t : t; };
+  if (!ex.retry) s.firstTotal++;
+  if (g.ok) {
+    s.combo++; s.maxCombo = Math.max(s.maxCombo, s.combo);
+    s.xp += ex.retry ? 5 : 10;
+    s.solved++;
+    if (!ex.retry) { s.firstOk++; s.fixed.push(exKey(ex)); }
+    if (s.combo >= 5 && s.combo % 5 === 0) addNote(`${s.combo} in a row!`);
+    Sound.play('good');
+  } else {
+    s.combo = 0;
+    if (!ex.retry) s.wrong.push(cleanEx(ex));
+    const tries = ex.tries || 0;
+    if (tries < 2) { s.queue.push(Object.assign(cleanEx(ex), { uid: rid(), retry: true, tries: tries + 1 })); addNote('This exercise will come back once more later.'); }
+    else s.solved++;
+    Sound.play('bad');
+  }
+  renderMain();
+  requestAnimationFrame(() => { const b = $('[data-act="px-next"]'); if (b) b.focus({ preventScroll: true }); });
+}
+function pxNext() {
+  const s = S.prac;
+  if (!s || s.phase !== 'feedback') return;
+  s.pos++; s.phase = 'answer'; s.result = null; s.ui = null;
+  if (s.pos >= s.queue.length) {
+    if (s.generating) s.waiting = true;
+    else { pxFinish(); return; }
+  }
+  renderMain();
+  window.scrollTo({ top: 0 });
+  requestAnimationFrame(() => { const i = $('#type-ans'); if (i) i.focus({ preventScroll: true }); });
+}
+function pxTap(act, id) {
+  const s = S.prac;
+  if (!s || s.phase !== 'answer' || s.pos >= s.queue.length || !s.ui) return;
+  const ex = s.queue[s.pos], ui = s.ui;
+  switch (act) {
+    case 'px-choice': ui.sel = Number(id); break;
+    case 'px-tf': ui.sel = id === 'true'; break;
+    case 'px-gap': ui.sel = Number(id); Sound.play('tick'); break;
+    case 'px-gap-clear': ui.sel = null; break;
+    case 'px-order-add': { const k = Number(id); if (!ui.line.includes(k)) { ui.line.push(k); Sound.play('tick'); } break; }
+    case 'px-order-del': ui.line = ui.line.filter(k => k !== Number(id)); break;
+    case 'px-sort-pick': { const i = Number(id); if (ui.place[i] != null) { delete ui.place[i]; ui.sel = null; } else ui.sel = ui.sel === i ? null : i; break; }
+    case 'px-sort-bin': if (ui.sel != null) { ui.place[ui.sel] = Number(id); ui.sel = null; Sound.play('tick'); } break;
+    case 'px-match': {
+      if (ui.flash) return;
+      const [side, si] = String(id).split(':');
+      const i = Number(si);
+      if (side === 'L') ui.selL = ui.selL === i ? null : i; else ui.selR = ui.selR === i ? null : i;
+      if (ui.selL != null && ui.selR != null) {
+        if (ui.selL === ui.selR) {
+          ui.done.push(ui.selL); ui.selL = ui.selR = null;
+          Sound.play('tick');
+          if (ui.done.length === ex.pairs.length) { pxResolve(pxGrade(ex, ui), false); return; }
+        } else {
+          ui.mistakes++; ui.flash = [ui.selL, ui.selR];
+          Sound.play('bad');
+          setTimeout(() => { if (S.prac === s && s.ui === ui) { ui.flash = null; ui.selL = ui.selR = null; renderMain(); } }, 550);
+        }
+      }
+      break;
+    }
+  }
+  renderMain();
+}
+function pxFinish() {
+  const s = S.prac;
+  if (!s || s.done) return;
+  s.done = true;
+  const c = S.course, t = today();
+  if (s.firstTotal >= 3 && s.firstOk === s.firstTotal) { s.bonus = 10; s.xp += 10; }
+  s.acc = s.firstTotal ? s.firstOk / s.firstTotal : 0;
+  const before = c.xp[t] || 0;
+  c.xp[t] = before + s.xp;
+  s.goalJustReached = before < c.goal && c.xp[t] >= c.goal;
+  const days = Object.keys(c.xp).sort();
+  if (days.length > 120) for (const k of days.slice(0, days.length - 120)) delete c.xp[k];
+  if (s.key) {
+    const p = c.practice[s.key] || { n: 0, good: 0, best: 0 };
+    p.n++; if (s.acc >= 0.8) p.good++;
+    p.best = Math.max(p.best, Math.round(s.acc * 100));
+    c.practice[s.key] = p;
+  }
+  const fixed = new Set(s.fixed);
+  c.mistakes = c.mistakes.filter(m => !fixed.has(exKey(m)));
+  for (const ex of s.wrong) if (!c.mistakes.some(m => exKey(m) === exKey(ex))) c.mistakes.push(ex);
+  if (c.mistakes.length > 60) c.mistakes = c.mistakes.slice(-60);
+  c.sessions = (c.sessions || 0) + 1;
+  markActivity(); saveCourse();
+  Sound.play('done');
+  renderAll();
+  window.scrollTo({ top: 0 });
+  setTimeout(() => checkStickers({ session: s }), 700);
+}
+
+/* practice rendering */
+function practicePanel(c) {
+  if (!S.chunkList.length) return emptyBlock('Nothing to practise yet', 'Add your study material first. Then you can practise with short exercises.', '<button class="btn primary" data-act="tab" data-id="material">Add material</button>');
+  const t = today();
+  const xpToday = c.xp[t] || 0, goal = c.goal;
+  const total = Object.values(c.xp).reduce((a, b) => a + b, 0);
+  const st = streak(c);
+  const pct = Math.min(100, Math.round(xpToday / goal * 100));
+  const goalSel = `<label class="muted small">Daily goal <select data-chg="goal" aria-label="Daily goal">${[20, 30, 50, 100].map(n => `<option value="${n}"${n === goal ? ' selected' : ''}>${n} XP</option>`).join('')}</select></label>`;
+  const head = `<section class="index-card goal-card"><div class="card-head"><h2>Today</h2>${goalSel}</div><div class="card-body">${buddy(xpToday >= goal ? 'cheer' : 'happy', 70, xpToday >= goal ? 'Daily goal reached! Meow, well done.' : xpToday ? `Just ${goal - xpToday} XP more and you reach your daily goal!` : 'Fancy a practice round? I\'ll join you!')}
+      <p>${xpToday >= goal ? `Daily goal reached with ${xpToday} XP.` : `${xpToday} of ${goal} XP. ${goal - xpToday} XP to go.`}</p>
+      <div class="bar goal-bar" role="img" aria-label="${pct} percent of your daily goal"><i style="width:${pct}%"></i></div>
+      <p class="muted">${st ? `Studied ${plural(st, 'day', 'days')} in a row. ` : ''}${total} XP in total.</p>
+      <div class="row">${S.ai ? aiButton('prac-all', c.plan ? 'Practise the whole subject' : 'Practise with all your material') : ''}${poolBtn('all', S.ai ? `Practise with saved exercises (${S.pool.length})` : `Practise the whole subject (${S.pool.length} exercises)`, S.ai ? 'ghost' : 'primary', true)}${c.mistakes.length ? `<button class="btn ghost" data-act="prac-mistakes"${S.busy ? ' disabled' : ''}>Review your mistakes (${c.mistakes.length})</button>` : ''}</div>
+    </div></section>`;
+  const intro = `${!S.ai ? '<p class="banner">Offline you practise with exercises that were made in Claude before. A lesson without saved exercises can\'t be practised here.</p>' : ''}<p class="muted prac-intro">Short exercises: choosing, filling in, matching, sorting and putting things in order. What you get wrong comes back once more at the end. Get 80% or more right first time and a lesson goes up a level.</p>`;
+  const units = c.plan ? c.plan.units.map((u, ui) => `<section class="unit"><div class="unit-head"><h3><span class="num">Chapter ${ui + 1}</span>${esc(u.title)}</h3>${S.ai ? aiButton('prac-unit', 'Practise chapter', 'ghost small', u.id) : poolBtn('unit:' + u.id, 'Practise chapter', 'ghost small')}</div>
+      <ul class="lessons">${u.lessons.map(l => {
+        const p = c.practice[l.id];
+        const lvl = p ? Math.min(3, p.good) : 0;
+        return `<li class="prow"><span class="pt"><span class="t">${esc(l.title)}</span><span class="lvl" role="img" aria-label="Level ${lvl} of 3">${[0, 1, 2].map(i => `<i class="${i < lvl ? 'on' : ''}"></i>`).join('')}</span></span>${S.ai ? aiButton('prac-lesson', 'Practise', 'ghost small', l.id) : poolBtn('les:' + l.id, 'Practise', 'ghost small')}</li>`;
+      }).join('')}</ul></section>`).join('')
+    : '<p class="muted" style="margin-top:24px">Make a study plan under Plan, then you can also practise per lesson and per chapter.</p>';
+  return `<h2>Practise</h2>${intro}${head}${units}<p class="small" style="margin-top:24px"><button class="link" data-act="sound">${Sound.on ? 'Turn sound off' : 'Turn sound on'}</button></p>`;
+}
+function practiceSession() {
+  const s = S.prac;
+  if (s.done) return pxDoneHtml(s);
+  const denom = Math.max(s.generating ? s.target : s.added, 1);
+  const pct = Math.min(100, Math.round(s.solved / denom * 100));
+  const top = `<div class="prac-top"><button class="btn ghost small" data-act="prac-quit">Stop</button><div class="bar" role="progressbar" aria-label="Progress of this round" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div><span class="combo">${s.combo >= 3 ? `${s.combo} in a row` : ''}</span></div>`;
+  if (s.pos >= s.queue.length) {
+    return `<div class="prac">${top}<div class="prac-body prac-wait" role="status">${mascot('think', 120)}<span class="pulse" aria-hidden="true"><i></i><i></i><i></i></span><h2>${s.added ? 'The next exercise is being made' : 'Your exercises are being made'}</h2><p class="muted">${esc(s.label)}. The first exercise appears as soon as it is ready, usually within a minute. If Claude asks for permission, allow it.</p></div></div>`;
+  }
+  const ex = s.queue[s.pos];
+  if (!s.ui) s.ui = pxInitUi(ex);
+  return `<div class="prac">${top}<div class="prac-body"><p class="prac-kicker"><span>${PX_LABEL[ex.type] || ''}</span>${ex.retry ? '<span class="retry-tag">One more time</span>' : ''}</p>${pxBody(ex, s.ui, s.phase === 'feedback', s.result)}</div>${pxFoot(ex, s)}</div>`;
+}
+function pxBody(ex, ui, fb, r) {
+  const dis = fb ? ' disabled' : '';
+  switch (ex.type) {
+    case 'choice':
+      return `<h2 class="prac-q">${esc(ex.prompt)}</h2><div class="opts">${ex.options.map((o, k) => {
+        let cls = ui.sel === k ? ' sel' : '';
+        if (fb) { if (k === ex.answer) cls = ' correct'; else if (k === ui.sel) cls = ' wrong'; else cls = ''; }
+        return `<button class="opt${cls}" data-act="px-choice" data-id="${k}"${dis}><span class="k">${k + 1}</span><span>${esc(o)}</span></button>`;
+      }).join('')}</div>`;
+    case 'truefalse':
+      return `<h2 class="prac-q">${esc(ex.statement)}</h2><div class="tf">${[true, false].map((v, k) => {
+        let cls = ui.sel === v ? ' sel' : '';
+        if (fb) { if (v === ex.answer) cls = ' correct'; else if (v === ui.sel) cls = ' wrong'; else cls = ''; }
+        return `<button class="opt${cls}" data-act="px-tf" data-id="${v}"${dis}><span class="k">${k + 1}</span><span>${v ? 'True' : 'False'}</span></button>`;
+      }).join('')}</div>`;
+    case 'gap': {
+      const [a, b] = ex.text.split('___');
+      const filled = ui.sel != null ? ui.tiles[ui.sel] : '';
+      const slotCls = fb ? (r && r.ok ? ' ok' : ' bad') : (filled ? ' filled' : '');
+      return `<p class="gap-sent">${esc(a)}<button class="slot${slotCls}" data-act="px-gap-clear"${(fb || !filled) ? ' disabled' : ''} aria-label="${filled ? 'Chosen: ' + esc(filled) + '. Click to clear.' : 'Empty blank'}">${filled ? esc(filled) : '&nbsp;'}</button>${esc(b)}</p>
+        <div class="tiles">${ui.tiles.map((t, k) => `<button class="tile${ui.sel === k ? ' ph' : ''}" data-act="px-gap" data-id="${k}"${(fb || ui.sel === k) ? ' disabled' : ''}>${esc(t)}</button>`).join('')}</div>`;
+    }
+    case 'order': {
+      const inLine = new Set(ui.line);
+      const steps = !ex.items.every(t => !/\s/.test(t));
+      const lineTiles = ui.line.map((k, pos) => {
+        const cls = fb ? (ui.tiles[k].t === ex.items[pos] ? ' ok' : ' bad') : '';
+        return `<button class="tile${cls}" data-act="px-order-del" data-id="${k}"${dis}>${steps ? `${pos + 1}. ` : ''}${esc(ui.tiles[k].t)}</button>`;
+      }).join('');
+      return `<h2 class="prac-q">${esc(ex.prompt)}</h2>
+        <div class="line-area${steps ? ' steps' : ''}" aria-label="Your order">${lineTiles || `<span class="line-hint">Tap the ${steps ? 'items' : 'words'} below in the right order.</span>`}</div>
+        <div class="tiles${steps ? ' steps' : ''}">${ui.tiles.map((tile, k) => `<button class="tile${inLine.has(k) ? ' ph' : ''}" data-act="px-order-add" data-id="${k}"${(fb || inLine.has(k)) ? ' disabled' : ''}>${esc(tile.t)}</button>`).join('')}</div>`;
+    }
+    case 'match': {
+      const done = new Set(ui.done);
+      const col = (side, arr) => arr.map(i => {
+        const isDone = done.has(i);
+        const sel = side === 'L' ? ui.selL === i : ui.selR === i;
+        const flash = ui.flash && ui.flash[side === 'L' ? 0 : 1] === i;
+        const txt = side === 'L' ? ex.pairs[i][0] : ex.pairs[i][1];
+        return `<button class="tile${isDone ? ' ok done' : ''}${sel ? ' sel' : ''}${flash ? ' bad shake' : ''}" data-act="px-match" data-id="${side}:${i}"${(fb || isDone) ? ' disabled' : ''}>${esc(txt)}</button>`;
+      }).join('');
+      return `<h2 class="prac-q">${esc(ex.prompt)}</h2><div class="match"><div class="mcol">${col('L', ui.L)}</div><div class="mcol">${col('R', ui.R)}</div></div>`;
+    }
+    case 'sort': {
+      const tray = ui.order.filter(i => ui.place[i] == null);
+      const tile = i => {
+        let cls = ui.sel === i ? ' sel' : '';
+        if (fb) cls = ui.place[i] === ex.items[i][1] ? ' ok' : ' bad';
+        return `<button class="tile${cls}" data-act="px-sort-pick" data-id="${i}"${dis}>${esc(ex.items[i][0])}</button>`;
+      };
+      return `<h2 class="prac-q">${esc(ex.prompt)}</h2>
+        <div class="tiles tray">${tray.length ? tray.map(tile).join('') : (fb ? '' : '<span class="line-hint">Everything is sorted. Click Check.</span>')}</div>
+        <div class="bins">${ex.groups.map((g, gi) => `<div class="bin"><button class="bin-head${!fb && ui.sel != null ? ' armed' : ''}" data-act="px-sort-bin" data-id="${gi}"${(fb || ui.sel == null) ? ' disabled' : ''}>${esc(g)}</button><div class="tiles bin-items">${ui.order.filter(i => ui.place[i] === gi).map(tile).join('')}</div></div>`).join('')}</div>
+        ${fb ? '' : `<p class="muted small">${ui.sel != null ? 'Now choose the group it belongs to.' : 'Tap a word, then the group it belongs to. Tap a sorted word to put it back.'}</p>`}`;
+    }
+    case 'type':
+      return `<h2 class="prac-q">${esc(ex.prompt)}</h2><input id="type-ans" class="type-ans${fb ? (r && r.ok ? ' ok' : ' bad') : ''}" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" placeholder="Type your answer" aria-label="Your answer" value="${esc(ui.value)}"${dis}>`;
+  }
+  return '';
+}
+function pxFoot(ex, s) {
+  if (s.phase === 'feedback') {
+    const r = s.result;
+    const expl = ex.explain ? `<p class="muted">${esc(ex.explain)} ${srcChip(ex.source)}</p>` : (ex.source && S.chunks.has(ex.source) ? `<p class="muted small">Source: ${srcChip(ex.source)}</p>` : '');
+    return `<div class="prac-foot fb ${r.ok ? 'good' : 'bad'}" role="status"><div class="fb-main">${mascot(r.ok ? 'cheer' : 'sad', 64)}<div class="fb-text"><strong>${esc(r.head)}</strong>${!r.ok && r.correct ? `<p>Correct answer: ${esc(r.correct)}</p>` : ''}${r.note ? `<p>${esc(r.note)}</p>` : ''}${expl}</div></div><button class="btn primary" data-act="px-next">Continue</button></div>`;
+  }
+  if (ex.type === 'match') return `<div class="prac-foot"><p class="muted small hint">Tap a term, then the item that goes with it.</p><button class="btn ghost" data-act="px-skip">I don't know</button></div>`;
+  const hint = ex.type === 'type' ? 'Press Enter to check.' : (['choice', 'truefalse', 'gap'].includes(ex.type) ? 'Choose with the number keys, check with Enter.' : '');
+  return `<div class="prac-foot">${hint ? `<p class="muted small hint">${hint}</p>` : ''}<button class="btn ghost" data-act="px-skip">I don't know</button><button class="btn primary" data-act="px-check"${pxCanCheck(ex, s.ui) ? '' : ' disabled'}>Check</button></div>`;
+}
+function pxDoneHtml(s) {
+  const c = S.course;
+  const xpToday = c.xp[today()] || 0;
+  const w = s.wrong.length;
+  const again = s.scope === 'mistakes'
+    ? (c.mistakes.length ? `<button class="btn ghost" data-act="prac-again">Review your mistakes again</button>` : '')
+    : (s.fromPool ? `<button type="button" class="btn ghost" data-act="prac-again">Practise again</button>` : aiButton('prac-again', 'Practise again', 'ghost'));
+  const mist = s.scope !== 'mistakes' && w ? `<button class="btn ghost" data-act="prac-mistakes">Review your mistakes</button>` : '';
+  const msg = s.bonus ? 'Flawless! That deserves an extra high paw.' : s.acc >= 0.8 ? 'What a great round! I\'m proud of you.' : s.acc >= 0.5 ? 'Well done! Practice makes you stronger every time.' : 'Great that you kept going. Tomorrow will be even better!';
+  return `<div class="prac-done">${buddy('cheer', 110, msg)}<div class="index-card"><div class="card-head"><h2>${s.bonus ? 'Flawless round!' : 'Round complete'}</h2><span class="muted small">${esc(s.label)}</span></div>
+    <div class="card-body">
+      ${s.firstTotal ? `<p>${s.firstOk} of ${s.firstTotal} exercises right first time (${Math.round(s.acc * 100)}%).</p>` : ''}
+      <p>You earned <strong>${s.xp} XP</strong>${s.bonus ? ', including a 10 XP bonus because everything was right first time' : ''}.</p>
+      <p>${s.goalJustReached ? `Daily goal reached! Today ${xpToday} of ${c.goal} XP.` : `Today ${xpToday} of ${c.goal} XP.`}</p>
+      ${s.maxCombo >= 3 ? `<p>Longest streak: ${s.maxCombo} right in a row.</p>` : ''}
+      ${w ? `<p>${w === 1 ? '1 exercise went' : `${w} exercises went`} wrong the first time. You'll find ${w === 1 ? 'it' : 'them'} under Review your mistakes.</p>` : ''}
+      <div class="row"><button class="btn primary" data-act="prac-close">Klaar</button>${again}${mist}</div>
+    </div></div></div>`;
+}
+
+
+/* ---------- offline: pool, package, export & import ---------- */
+function poolAddMany(list, key) {
+  if (!S.course) return 0;
+  const have = new Set(S.pool.map(exKey));
+  let n = 0;
+  for (const ex of list) {
+    if (!ex || ex.retry) continue;
+    const e = cleanEx(ex);
+    const k = exKey(e);
+    if (have.has(k)) continue;
+    e.k = key || 'all';
+    S.pool.push(e); have.add(k); n++;
+  }
+  while (S.pool.length && bytes(JSON.stringify({ items: S.pool })) > 220000) S.pool.shift();
+  if (n) Store.save('pool-' + S.course.id, { items: S.pool });
+  return n;
+}
+function poolFor(scope) {
+  const c = S.course;
+  if (!c) return [];
+  if (scope.startsWith('les:')) { const lid = scope.slice(4); return S.pool.filter(e => e.k === lid); }
+  if (scope.startsWith('unit:')) {
+    const u = c.plan && c.plan.units.find(x => x.id === scope.slice(5));
+    if (!u) return [];
+    const ids = new Set([u.id, ...u.lessons.map(l => l.id)]);
+    return S.pool.filter(e => ids.has(e.k));
+  }
+  return S.pool.slice();
+}
+function poolBtn(scope, label, variant, hideEmpty) {
+  const n = poolFor(scope).length;
+  if (!n && hideEmpty) return '';
+  return `<button type="button" class="btn ${variant}" data-act="prac-pool" data-id="${esc(scope)}"${(!n || S.busy) ? ' disabled title="No saved exercises yet"' : ''}>${esc(label)}</button>`;
+}
+function startPoolPractice(scope) {
+  if (S.busy) { toast('Claude is still busy. Wait a moment or click Stop.'); return; }
+  const items = poolFor(scope);
+  if (!items.length) {
+    toast(S.ai ? 'There are no saved exercises for this part yet.' : 'No exercises have been saved for this part yet. Practise it first in the version in Claude, or choose Get everything ready for offline there.', true);
+    return;
+  }
+  const info = practiceScope(scope);
+  const sess = newSession(scope, info.label, info.key, 0);
+  sess.fromPool = true;
+  shuffle(items.slice()).slice(0, 10).forEach(ex => {
+    const e = clone(ex);
+    if (e.type === 'choice') { const right = e.options[e.answer]; e.options = shuffle(e.options.slice()); e.answer = e.options.indexOf(right); }
+    e.uid = rid(); sess.queue.push(e); sess.added++;
+  });
+  sess.target = sess.added; sess.waiting = false;
+  S.prac = sess;
+  renderAll();
+  window.scrollTo({ top: 0 });
+}
+async function generatePool(scope, label) {
+  const c = S.course;
+  const info = practiceScope(scope);
+  const prompt = practicePrompt(c, info);
+  const res = await runAi({ kind: 'pool', label, hint: 'These exercises are saved, so you can also practise them offline later.' }, signal => S.sample(prompt, { signal, cache: false }));
+  if (!res || !res.text) return false;
+  const tmp = newSession(scope, info.label, info.key, 0);
+  res.text.split('\n').forEach(l => pxParseLine(tmp, l));
+  if (!tmp.added) {
+    const t = res.text.replace(/```\w*/g, '');
+    const a = t.indexOf('['), b = t.lastIndexOf(']');
+    if (a >= 0 && b > a) { try { JSON.parse(t.slice(a, b + 1)).forEach(o => pxAdd(tmp, o)); } catch (e) { /* ignore */ } }
+  }
+  poolAddMany(tmp.queue, info.key);
+  return tmp.added > 0;
+}
+async function prepareOffline() {
+  const c = S.course;
+  if (!c || !c.plan) { toast('Make a study plan first.'); return; }
+  if (!S.ai) { toast('Getting ready only works in the version in Claude.', true); return; }
+  if (S.busy) { toast('Claude is still busy. Wait a moment or click Stop.'); return; }
+  const todo = allLessons(c).filter(x => !c.written[x.lesson.id]);
+  let i = 0;
+  for (const x of todo) {
+    i++;
+    const ok = await writeLesson(x.lesson.id, false, `Writing lesson ${i} of ${todo.length} for offline use`);
+    if (!ok) { toast('Getting ready stopped. You can continue later.'); return; }
+  }
+  const units = c.plan.units;
+  for (let j = 0; j < units.length; j++) {
+    if (poolFor('unit:' + units[j].id).length >= 8) continue;
+    const ok = await generatePool('unit:' + units[j].id, `Making practice exercises for chapter ${j + 1} of ${units.length}`);
+    if (!ok) { toast('Getting ready stopped. You can continue later.'); return; }
+  }
+  toast('Everything is ready for offline use. Now download Blokboek with your subjects.');
+  offlineDlg();
+}
+async function exportData() {
+  const out = { v: 1, app: 'blokboek', id: rid(), at: new Date().toISOString(), data: { index: { courses: S.courses } } };
+  for (const e of S.courses) {
+    const c = await Store.get('course-' + e.id);
+    if (!c) continue;
+    out.data['course-' + e.id] = c;
+    for (const pre of ['cards-', 'pool-']) { const v = await Store.get(pre + e.id); if (v) out.data[pre + e.id] = v; }
+    for (const f of c.files || []) for (let i = 0; i < (f.docs || 0); i++) { const k = `mat-${e.id}-${f.id}-${i}`; const v = await Store.get(k); if (v) out.data[k] = v; }
+    for (const lid of Object.keys(c.written || {})) { const k = `les-${e.id}-${lid}`; const v = await Store.get(k); if (v) out.data[k] = v; }
+  }
+  return out;
+}
+async function importData(pkg) {
+  for (const [k, v] of Object.entries(pkg.data)) {
+    if (!/^(course|cards|pool|mat|les)-[\w.~:@+-]+$/.test(k) || !v || typeof v !== 'object') continue;
+    await Store.put(k, v);
+  }
+  for (const e of (pkg.data.index.courses || [])) {
+    if (!e || !e.id || !pkg.data['course-' + e.id]) continue;
+    const i = S.courses.findIndex(x => x.id === e.id);
+    if (i >= 0) S.courses[i] = e; else S.courses.push(e);
+  }
+  await Store.put('index', { courses: S.courses });
+}
+function validPkg(pkg) { return !!(pkg && pkg.v === 1 && pkg.data && pkg.data.index && Array.isArray(pkg.data.index.courses)); }
+function pkgDate(pkg) { try { return new Date(pkg.at).toLocaleString('en-GB', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } }
+async function handleImport(file) {
+  if (!file) return;
+  let pkg = null;
+  try { pkg = JSON.parse(await file.text()); } catch (e) { pkg = null; }
+  if (!validPkg(pkg)) { toast('This is not a Blokboek export file.', true); return; }
+  const list = pkg.data.index.courses.filter(x => x && pkg.data['course-' + x.id]);
+  if (!list.length) { toast('This file contains no subjects.', true); return; }
+  const names = list.map(x => `"${x.name}"`).join(', ');
+  const overlap = list.filter(x => S.courses.some(y => y.id === x.id)).map(x => `"${x.name}"`);
+  const msg = `This file contains the ${list.length === 1 ? 'subject' : 'subjects'} ${names}, saved on ${pkgDate(pkg)}.${overlap.length ? ` The version of ${overlap.join(', ')} here will be replaced by the one in the file. Anything you did here since then will be lost.` : ''}`;
+  if (!await confirmDlg(msg, 'Import')) return;
+  try {
+    await importData(pkg);
+    toast('Imported.');
+    const fresh = list.find(x => x.id !== S.cid);
+    const target = (list.length === 1 && fresh) ? fresh.id : ((S.cid && pkg.data['course-' + S.cid]) ? S.cid : (S.cid || (S.courses[0] && S.courses[0].id)));
+    if (target) { S.cid = null; openCourse(target); } else renderAll();
+  } catch (e) {
+    toast('Import failed. Try again.', true);
+  }
+}
+async function saveFile(filename, text) {
+  if (S.downloads) {
+    try { await S.downloads.save({ filename, data: new Blob([text]) }); return true; }
+    catch (e) {
+      const code = e && e.code;
+      if (code === 'declined') return false;
+      if (code === 'rate_limited') { toast('A window to save a file is already open.'); return false; }
+      toast('Saving doesn\'t work here.', true); return false;
+    }
+  }
+  if (window.claude) { toast('Downloading isn\'t possible in this view.', true); return false; }
+  const type = /\.json$/i.test(filename) ? 'application/json' : 'text/html';
+  try {
+    const file = new File([text], filename, { type });
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file] });
+      return true;
+    }
+  } catch (e) { if (e && e.name === 'AbortError') return false; }
+  try {
+    const url = URL.createObjectURL(new Blob([text], { type: 'application/octet-stream' }));
+    const a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+    return true;
+  } catch (e) { toast('Download failed.', true); return false; }
+}
+function buildOfflineHtml(pkg) {
+  const style = ($('#bb-style') || {}).textContent || '';
+  const app = ($('#bb-app') || {}).textContent || '';
+  if (!style || !app) throw new Error('missing source');
+  const fonts = document.querySelector('link[href*="fonts.googleapis"]');
+  const seed = JSON.stringify(pkg).replace(/</g, '\\u003c');
+  const end = '</' + 'script>';
+  return '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n<title>Blokboek</title>\n'
+    + '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%92%3C/text%3E%3C/svg%3E">\n'
+    + (fonts ? fonts.outerHTML + '\n' : '')
+    + '<style id="bb-style">' + style + '</style>\n</head>\n<body>\n<div class="app">\n  <aside class="side" id="side"></aside>\n  <main class="main" id="main"></main>\n</div>\n'
+    + '<div id="toast" class="toast" role="status" aria-live="polite"></div>\n<input type="file" id="import-input" hidden>\n'
+    + '<script id="bb-seed" type="application/json">' + seed + end + '\n'
+    + '<script id="bb-app">' + app + end + '\n</body>\n</html>\n';
+}
+async function downloadOffline() {
+  if (S.busy) { toast('Claude is still busy. Wait a moment or click Stop.'); return; }
+  try {
+    const pkg = await exportData();
+    const html = buildOfflineHtml(pkg);
+    const ok = await saveFile('blokboek-offline.html', html);
+    if (ok) toast('Saved. Open blokboek-offline.html from your Downloads folder.');
+  } catch (e) { toast('The file could not be created. Try again.', true); }
+}
+async function exportProgress() {
+  try {
+    const pkg = await exportData();
+    const ok = await saveFile(`blokboek-progress-${today()}.json`, JSON.stringify(pkg));
+    if (ok) toast('Progress saved. Import this file into Blokboek in Claude.');
+  } catch (e) { toast('Export failed.', true); }
+}
+async function applySeed() {
+  const el = document.getElementById('bb-seed');
+  if (!el) return;
+  let seed = null;
+  try { seed = JSON.parse(el.textContent); } catch (e) { return; }
+  if (!validPkg(seed)) return;
+  let applied = null;
+  try { applied = await Store.get('seed-applied'); } catch (e) { applied = null; }
+  if (applied && applied.id === seed.id) return;
+  if (applied && S.courses.length) {
+    const ok = await confirmDlg(`This file contains your subjects from Claude, saved on ${pkgDate(seed)}. Do you want to load them? Progress you made only here offline will be replaced. Export it first if you want to keep it.`, 'Load');
+    if (!ok) { await Store.put('seed-applied', { id: seed.id }); return; }
+  }
+  await importData(seed);
+  await Store.put('seed-applied', { id: seed.id });
+  toast('Your subjects from Claude have been loaded.');
+}
+function offlineDlg() {
+  const online = !!window.claude;
+  const c = S.course;
+  let body;
+  if (online) {
+    const L = c && c.plan ? allLessons(c) : [];
+    const written = c ? L.filter(x => c.written[x.lesson.id]).length : 0;
+    const ready = c && c.plan && written === L.length && S.pool.length >= 8;
+    body = `<h2>Use Blokboek offline</h2>
+      <p class="muted">Download Blokboek as one file with all your subjects in it. You open that file in your browser, without internet and without signing in to Claude.</p>
+      <h3 class="dlg-h">1. Get everything ready</h3>
+      <p class="muted">Offline, Claude can't make anything new. You can only read lessons that are already written and practise with exercises that are already made.</p>
+      ${c ? `<p><strong>${esc(c.name)}:</strong> ${c.plan ? `${written} of ${L.length} lessons written, ${S.pool.length} practice exercises saved.` : 'no study plan yet.'}</p>` : ''}
+      ${c && c.plan ? `<div class="row">${aiButton('prep-offline', ready ? 'Everything is ready' : 'Get everything ready for offline', 'ghost')}</div><p class="muted small">This writes the lessons that are still missing and makes practice exercises per chapter. It counts towards your Claude usage. Several subjects? Do this for each one.</p>` : ''}
+      <h3 class="dlg-h">2. Download</h3>
+      <div class="row"><button type="button" class="btn primary" data-act="dl-offline"${S.courses.length ? '' : ' disabled'}>Download Blokboek with my subjects</button></div>
+      <p class="muted small">Open the file on your computer with Chrome or Edge. Your progress is then saved in that browser.</p>
+      <h3 class="dlg-h">Back to Claude</h3>
+      <p class="muted">Studied offline? In the offline version choose Export my progress, then import that file here.</p>
+      <div class="row"><button type="button" class="btn ghost" data-act="import-data">Import progress</button></div>`;
+  } else {
+    body = `<h2>Export and import</h2>
+      <p class="muted">You are using Blokboek offline. Your data is stored only on this device, in this app or browser, so keep using the same one.</p>
+      <h3 class="dlg-h">Take your progress to Claude</h3>
+      <p class="muted">Export your progress and import the file into Blokboek in Claude, under Use offline. Such a file is also a handy backup.</p>
+      <div class="row"><button type="button" class="btn primary" data-act="export-data"${S.courses.length ? '' : ' disabled'}>Export my progress</button><button type="button" class="btn ghost" data-act="import-data">Import a file</button></div>`;
+  }
+  const dlg = document.createElement('dialog');
+  dlg.innerHTML = `<form method="dialog" class="dlg">${body}<div class="dlg-actions"><button class="btn ghost" value="close">Close</button></div></form>`;
+  document.body.appendChild(dlg);
+  dlg.addEventListener('close', () => dlg.remove());
+  dlg.showModal();
+}
+
+
+/* ---------- ready-made courses offered through the artifact's shared inbox ---------- */
+async function loadInbox() {
+  if (Store.mode !== 'db' || !Store.db) return;
+  const snap = await retry(() => Store.db.collection('inbox').get());
+  let seen = null;
+  try { seen = await Store.get('inbox-seen'); } catch (e) { seen = null; }
+  const done = new Set((seen && Array.isArray(seen.ids)) ? seen.ids : []);
+  const groups = {};
+  for (const d of snap.docs) {
+    const v = d.data();
+    if (!v || typeof v.pkg !== 'string' || done.has(v.pkg) || !v.keys || typeof v.keys !== 'object') continue;
+    (groups[v.pkg] = groups[v.pkg] || []).push(v);
+  }
+  S.inbox = Object.values(groups)
+    .filter(parts => parts.length === Number(parts[0].of))
+    .map(parts => ({ id: parts[0].pkg, name: String(parts[0].name || 'New subject'), desc: String(parts[0].desc || ''), parts: parts.sort((a, b) => a.part - b.part) }));
+}
+function inboxHtml() {
+  if (!S.inbox || !S.inbox.length) return '';
+  return S.inbox.map(it => `<section class="index-card inbox-card"><div class="card-head"><h2>New subject ready</h2></div><div class="card-body">
+    ${buddy('cheer', 64, `A ready-made subject is waiting for you: ${esc(it.name)}.`)}
+    ${it.desc ? `<p class="muted">${esc(it.desc)}</p>` : ''}
+    <div class="row"><button type="button" class="btn primary" data-act="inbox-add" data-id="${esc(it.id)}"${S.busy ? ' disabled' : ''}>Add to my subjects</button><button type="button" class="btn ghost" data-act="inbox-later" data-id="${esc(it.id)}">Not now</button></div>
+  </div></section>`).join('');
+}
+async function addInbox(id) {
+  const it = (S.inbox || []).find(x => x.id === id);
+  if (!it) return;
+  if (S.busy) { toast('Claude is still busy. Wait a moment or click Stop.'); return; }
+  const data = {};
+  for (const part of it.parts) Object.assign(data, part.keys);
+  const pkg = { v: 1, app: 'blokboek', id: it.id, at: new Date().toISOString(), data };
+  if (!validPkg(pkg)) { toast('This subject is incomplete. Try again later.', true); return; }
+  const list = pkg.data.index.courses.filter(x => x && pkg.data['course-' + x.id]);
+  const overlap = list.filter(x => S.courses.some(y => y.id === x.id));
+  if (overlap.length && !await confirmDlg(`You already have "${overlap[0].name}". Adding replaces that subject, including your progress in it.`, 'Replace')) return;
+  try {
+    await importData(pkg);
+    let seen = null;
+    try { seen = await Store.get('inbox-seen'); } catch (e) { seen = null; }
+    const ids = (seen && Array.isArray(seen.ids)) ? seen.ids : [];
+    if (!ids.includes(it.id)) ids.push(it.id);
+    await Store.put('inbox-seen', { ids });
+    S.inbox = S.inbox.filter(x => x.id !== id);
+    toast(`${it.name} has been added.`);
+    if (list[0]) { S.cid = null; openCourse(list[0].id); } else renderAll();
+  } catch (e) {
+    toast('Adding failed. Try again.', true);
+  }
+}
+
+/* ---------- markdown ---------- */
+function srcChip(id) {
+  const ch = S.chunks.get(id);
+  if (!ch) return '';
+  return `<button class="src" data-act="src" data-id="${esc(id)}" title="${esc(ch.file + ', ' + ch.loc)}" aria-label="Source: ${esc(ch.file + ', ' + ch.loc)}">${esc(ch.loc)}</button>`;
+}
+function inline(t) {
+  let s = esc(t);
+  s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+  s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/(^|[^*\w])\*([^*\s][^*]*?)\*(?!\*)/g, '$1<em>$2</em>');
+  s = s.replace(/\[((?:c\d+)(?:\s*[,;]\s*c\d+)*)\]/g, (m, ids) => ids.split(/\s*[,;]\s*/).map(srcChip).join(''));
+  return s;
+}
+function renderMd(src) {
+  const lines = String(src || '').replace(/\r/g, '').split('\n');
+  let html = '', list = null, para = [];
+  const flushP = () => { if (para.length) { html += `<p>${inline(para.join(' '))}</p>`; para = []; } };
+  const flushL = () => { if (list) { html += `</${list}>`; list = null; } };
+  for (const raw of lines) {
+    const line = raw.trimEnd();
+    let m;
+    if (!line.trim()) { flushP(); flushL(); continue; }
+    if ((m = line.match(/^\s*(#{1,6})\s+(.*)$/))) { flushP(); flushL(); const lvl = m[1].length <= 2 ? 3 : 4; html += `<h${lvl}>${inline(m[2])}</h${lvl}>`; continue; }
+    if ((m = line.match(/^\s*[-*•]\s+(.*)$/))) { flushP(); if (list !== 'ul') { flushL(); html += '<ul>'; list = 'ul'; } html += `<li>${inline(m[1])}</li>`; continue; }
+    if ((m = line.match(/^\s*\d+[.)]\s+(.*)$/))) { flushP(); if (list !== 'ol') { flushL(); html += '<ol>'; list = 'ol'; } html += `<li>${inline(m[1])}</li>`; continue; }
+    if ((m = line.match(/^\s*>\s?(.*)$/))) { flushP(); flushL(); html += `<blockquote>${inline(m[1])}</blockquote>`; continue; }
+    flushL(); para.push(line.trim());
+  }
+  flushP(); flushL();
+  return html;
+}
+
+/* ---------- dialogs ---------- */
+function formDlg(inner, okLabel, extraBtns = '', noCancel = false) {
+  return new Promise(resolve => {
+    const dlg = document.createElement('dialog');
+    dlg.innerHTML = `<form method="dialog" class="dlg">${inner}<div class="dlg-actions">${extraBtns}${noCancel ? '' : '<button type="button" class="btn ghost" data-x="cancel">Cancel</button>'}<button class="btn primary" value="ok">${esc(okLabel)}</button></div></form>`;
+    document.body.appendChild(dlg);
+    const form = dlg.querySelector('form');
+    let result = null;
+    form.addEventListener('submit', e => {
+      const sub = e.submitter;
+      if (sub && sub.value && sub.value !== 'ok') { result = { __action: sub.value }; return; }
+      result = Object.fromEntries(new FormData(form).entries());
+    });
+    const cancel = dlg.querySelector('[data-x="cancel"]');
+    if (cancel) cancel.addEventListener('click', () => dlg.close());
+    dlg.addEventListener('close', () => { dlg.remove(); resolve(result); });
+    dlg.showModal();
+  });
+}
+async function confirmDlg(text, okLabel) {
+  const r = await formDlg(`<h2>Are you sure?</h2><p class="muted">${esc(text)}</p>`, okLabel);
+  return !!r && !r.__action;
+}
+function showSource(id) {
+  const ch = S.chunks.get(id);
+  if (!ch) return;
+  formDlg(`<h2>${esc(ch.file)}</h2><p class="muted">${esc(ch.loc)}</p><div class="src-text">${esc(ch.text)}</div>`, 'Close', '', true);
+}
+async function newCourseDlg() {
+  if (S.busy) { toast('Claude is still busy. Wait a moment or click Stop.'); return; }
+  const r = await formDlg(`<h2>New subject</h2>
+    <label class="f" for="f-name">Subject name</label><input id="f-name" name="name" required maxlength="80" autocomplete="off" placeholder="For example: Cell biology">
+    <label class="f" for="f-exam">Exam date <span class="opt-t">(optional)</span></label><input id="f-exam" name="exam" type="date" min="${today()}">
+    <label class="f" for="f-lang">Language of the lessons</label><select id="f-lang" name="lang"><option value="en">English</option><option value="nl">Dutch</option><option value="src">Same language as the material</option></select>
+    <p class="muted small" style="margin-top:14px">Got a subject as a file, or exported one? <button type="submit" class="link" value="import" formnovalidate>Import a subject from a file</button></p>`, 'Create subject');
+  if (r && r.__action === 'import') { const inp = $('#import-input'); if (inp) inp.click(); return; }
+  if (!r || r.__action) return;
+  const name = String(r.name || '').trim();
+  if (!name) return;
+  const c = { id: rid(), name, exam: r.exam || '', lang: r.lang || 'en', perDay: 3, files: [], next: 1, plan: null, done: {}, written: {}, quizzes: [], lastQuiz: null, activity: [], xp: {}, goal: 30, practice: {}, mistakes: [], stickers: {}, sessions: 0, reviews: 0, created: today() };
+  S.courses.push({ id: c.id, name: c.name, exam: c.exam });
+  saveIndex();
+  Store.save('course-' + c.id, c);
+  Store.save('cards-' + c.id, { cards: [] });
+  Object.assign(S, { cid: c.id, course: c, cards: [], lessonCache: {}, tab: 'material', lessonId: null, quiz: null, review: null, prac: null, pool: [], importing: [] });
+  setChunks([]);
+  rememberCourse(c.id);
+  renderAll();
+}
+async function settingsDlg() {
+  const c = S.course; if (!c) return;
+  const langs = [['en', 'English'], ['nl', 'Dutch'], ['src', 'Same language as the material']].map(([v, l]) => `<option value="${v}"${c.lang === v ? ' selected' : ''}>${l}</option>`).join('');
+  const r = await formDlg(`<h2>Subject settings</h2>
+    <label class="f" for="s-name">Name</label><input id="s-name" name="name" required maxlength="80" value="${esc(c.name)}">
+    <label class="f" for="s-exam">Exam date</label><input id="s-exam" name="exam" type="date" value="${esc(c.exam)}">
+    <p class="muted small">Leave empty if you don't have a date yet. Your schedule adapts to the date automatically.</p>
+    <label class="f" for="s-lang">Language of new lessons, quizzes and flashcards</label><select id="s-lang" name="lang">${langs}</select>`,
+    'Save', '<button class="btn danger" value="delete" formnovalidate>Delete subject</button>');
+  if (!r) return;
+  if (r.__action === 'delete') {
+    if (await confirmDlg(`"${c.name}" will be deleted, with all its material, lessons and flashcards. This can't be undone.`, 'Delete subject')) deleteCourse();
+    return;
+  }
+  c.name = String(r.name || '').trim() || c.name;
+  c.exam = r.exam || '';
+  c.lang = r.lang || 'nl';
+  saveCourse(); syncIndex(); renderAll();
+}
+async function deleteCourse() {
+  const c = S.course; const id = c.id;
+  const keys = [];
+  for (const f of c.files) for (let i = 0; i < f.docs; i++) keys.push(`mat-${id}-${f.id}-${i}`);
+  for (const lid of Object.keys(c.written || {})) keys.push(`les-${id}-${lid}`);
+  keys.push('cards-' + id, 'pool-' + id, 'course-' + id);
+  S.courses = S.courses.filter(x => x.id !== id);
+  saveIndex();
+  Object.assign(S, { cid: null, course: null, cards: [], quiz: null, review: null, prac: null, lessonId: null });
+  setChunks([]);
+  toast('Subject deleted.');
+  if (S.courses.length) openCourse(S.courses[0].id); else { rememberCourse(''); renderAll(); }
+  (async () => { for (const k of keys) { try { await Store.remove(k); } catch (e) { /* ignore */ } } })();
+}
+async function removeFile(fid) {
+  const c = S.course; const f = c.files.find(x => x.id === fid);
+  if (!f) return;
+  if (!await confirmDlg(`Delete "${f.name}"? Lessons already written stay, but new lessons, quizzes and flashcards won't use this file any more.`, 'Delete file')) return;
+  c.files = c.files.filter(x => x.id !== fid);
+  saveCourse();
+  setChunks(S.chunkList.filter(ch => ch.fileId !== fid));
+  for (let i = 0; i < f.docs; i++) Store.remove(`mat-${c.id}-${fid}-${i}`).catch(() => {});
+  renderMain();
+}
+
+/* ---------- loading ---------- */
+function normalizeCourse(c) {
+  c.files = c.files || []; c.next = c.next || 1; c.done = c.done || {}; c.written = c.written || {};
+  c.quizzes = c.quizzes || []; c.activity = c.activity || []; c.xp = c.xp || {}; c.goal = c.goal || 30; c.practice = c.practice || {}; c.mistakes = c.mistakes || []; c.stickers = c.stickers || {}; c.sessions = c.sessions || 0; c.reviews = c.reviews || 0; c.lang = c.lang || 'nl'; c.perDay = c.perDay || 3; c.exam = c.exam || '';
+  return c;
+}
+async function openCourse(id) {
+  if (S.busy) { toast('Claude is still busy. Wait a moment or click Stop.'); return; }
+  Object.assign(S, { cid: id, course: null, quiz: null, review: null, prac: null, pool: [], lessonId: null, importing: [] });
+  renderAll();
+  try {
+    const c = await Store.get('course-' + id);
+    if (S.cid !== id) return;
+    if (!c) {
+      toast('This subject could not be found.', true);
+      S.courses = S.courses.filter(x => x.id !== id); saveIndex();
+      S.cid = null;
+      if (S.courses.length) openCourse(S.courses[0].id); else renderAll();
+      return;
+    }
+    normalizeCourse(c);
+    const cd = await Store.get('cards-' + id);
+    const chunks = [];
+    for (const f of c.files) {
+      for (let i = 0; i < (f.docs || 0); i++) {
+        const m = await Store.get(`mat-${id}-${f.id}-${i}`);
+        if (m && Array.isArray(m.chunks)) chunks.push(...m.chunks);
+      }
+    }
+    if (S.cid !== id) return;
+    const maxId = chunks.reduce((a, ch) => Math.max(a, parseInt(ch.id.slice(1), 10) || 0), 0);
+    c.next = Math.max(c.next, maxId + 1);
+    S.course = c;
+    S.cards = (cd && Array.isArray(cd.cards)) ? cd.cards : [];
+    let pl = null; try { pl = await Store.get('pool-' + id); } catch (e) { pl = null; }
+    if (S.cid !== id) return;
+    S.pool = (pl && Array.isArray(pl.items)) ? pl.items : [];
+    setChunks(chunks);
+    S.lessonCache = {};
+    S.tab = c.plan ? 'plan' : 'material';
+    rememberCourse(id);
+    renderAll();
+  } catch (e) {
+    toast('This subject could not be loaded. Refresh the page to try again.', true);
+  }
+}
+async function openLesson(lid) {
+  const c = S.course; if (!c || !findLesson(lid)) return;
+  S.tab = 'plan'; S.lessonId = lid;
+  renderMain();
+  window.scrollTo({ top: 0 });
+  if (c.written[lid] && S.lessonCache[lid] === undefined) {
+    try {
+      const d = await Store.get(`les-${c.id}-${lid}`);
+      S.lessonCache[lid] = d && d.text ? d.text : null;
+    } catch (e) { S.lessonCache[lid] = null; }
+    if (!S.lessonCache[lid]) delete c.written[lid];
+    if (S.lessonId === lid) renderMain();
+  }
+  if (S.lessonId === lid && !S.lessonCache[lid] && !c.written[lid] && S.ai && !S.busy) writeLesson(lid, false);
+}
+
+/* ---------- rendering ---------- */
+function renderAll() { renderSide(); renderMain(); }
+function renderSide() {
+  const note = Store.mode === 'db' ? 'Your subjects are saved in this page and only visible to you.'
+    : Store.mode === 'local' ? 'Your subjects are saved in this browser.'
+    : S.ready ? 'Saving doesn\'t work here. Your work disappears when you close the page.' : '';
+  const nSt = S.course ? STICKERS.filter(st => S.course.stickers && S.course.stickers[st.id]).length : 0;
+  $('#side').innerHTML = `<div class="brand">Blokboek</div>
+    <div class="side-buddy">${mascot('happy', 58)}${S.course ? `<button class="chip link-chip" data-act="tab" data-id="progress" style="cursor:pointer">${nSt} of ${STICKERS.length} stickers</button>` : ''}</div>
+    <div class="side-courses">${S.courses.length ? `<p class="side-label">Your subjects</p><nav class="courses" aria-label="Subjects">${S.courses.map(e => `<button class="course-link" data-act="open-course" data-id="${esc(e.id)}" aria-current="${e.id === S.cid}"><span class="nm"><span>${esc(e.name)}</span></span>${examShort(e) ? `<span class="sub">${esc(examShort(e))}</span>` : ''}</button>`).join('')}</nav>` : ''}</div>
+    ${S.ready ? `<button class="btn ghost small" data-act="new-course">New subject</button><button class="btn ghost small" data-act="offline">${window.claude ? 'Use offline' : 'Export and import'}</button>` : ''}
+    <p class="store-note">${esc(note)}</p>`;
+}
+function renderMain() {
+  const m = $('#main');
+  if (!S.ready) { m.innerHTML = '<p class="loading">Loading your subjects…</p>'; return; }
+  const showOfflineNote = window.claude || !S.cid || S.tab === 'material';
+  const banner = !S.ai && showOfflineNote ? (window.claude
+    ? `<div class="banner">AI features aren't available here. Open this page in Claude to have lessons, quizzes and flashcards made. Everything you already made works as normal.</div>`
+    : `<div class="banner">You are using Blokboek offline. Reading lessons, reviewing flashcards, practising with saved exercises and tracking your progress all work. Making something new only works in the version in Claude.</div>`) : '';
+  if (!S.cid) { m.innerHTML = banner + inboxHtml() + welcomeHtml(); return; }
+  const c = S.course;
+  if (!c) { m.innerHTML = '<p class="loading">Loading subject…</p>'; return; }
+  if (S.prac) { m.innerHTML = banner + practiceSession(); return; }
+  const inlineBusy = S.busy && ((S.busy.kind === 'lesson' && S.tab === 'plan' && S.lessonId === S.busy.target) || (S.busy.kind === 'plan' && S.tab === 'plan' && !S.lessonId));
+  let panel;
+  switch (S.tab) {
+    case 'practice': panel = practicePanel(c); break;
+    case 'quiz': panel = quizPanel(c); break;
+    case 'cards': panel = cardsPanel(c); break;
+    case 'progress': panel = progressPanel(c); break;
+    case 'material': panel = materialPanel(c); break;
+    default: panel = planPanel(c);
+  }
+  const due = S.cards.filter(x => x.due <= today()).length;
+  m.innerHTML = `${banner}${inboxHtml()}<header class="course-head"><div><h1>${esc(c.name)}</h1><p class="exam-line">${esc(examLine(c))}</p></div><button class="btn ghost small" data-act="settings">Settings</button></header>
+    <nav class="tabs" aria-label="Parts of this subject">${TABS.map(([k, l]) => `<button class="tab" data-act="tab" data-id="${k}"${S.tab === k ? ' aria-current="page"' : ''}><span>${l}</span>${k === 'cards' && due ? `<b class="badge" aria-label="${due} to review">${due}</b>` : ''}</button>`).join('')}</nav>
+    <div class="panel">${S.busy && !inlineBusy ? busyHtml() : ''}${panel}</div>`;
+}
+function welcomeHtml() {
+  return `<section class="welcome">${buddy('happy', 120, 'Hi! I\'m Roosje. Shall we study together? I\'ll help you practise and stick stickers in your album when things go well.')}<div class="index-card">
+    <div class="card-head"><h1>Turn your study material into a study plan</h1></div>
+    <div class="card-body">
+      <p>Upload your slides, PDFs and notes. Claude turns them into short lessons, practice exercises, quiz questions and flashcards, and plans everything up to your exam.</p>
+      <ol><li>Create a subject and add your material.</li><li>Have a study plan with short lessons made.</li><li>Learn, practise with short exercises and review with flashcards.</li></ol>
+      <div class="row"><button class="btn primary" data-act="new-course">Create your first subject</button></div>
+    </div></div>
+    <p class="welcome-foot">The AI features count towards your own Claude usage.</p></section>`;
+}
+function emptyBlock(title, text, actions) {
+  return `<div class="empty">${mascot('think', 96)}<div><h2>${esc(title)}</h2><p>${esc(text)}</p><div class="row">${actions}</div></div></div>`;
+}
+function planPanel(c) {
+  if (S.lessonId) return lessonView(c);
+  if (S.busy && S.busy.kind === 'plan') return busyHtml();
+  if (!c.plan) {
+    if (!S.chunkList.length) return emptyBlock('No study plan yet', 'Add your slides, PDFs or notes first. Then Claude turns them into a plan with short lessons.', '<button class="btn primary" data-act="tab" data-id="material">Add material</button>');
+    return emptyBlock('Ready to plan', `You have added ${plural(c.files.length, 'file', 'files')}. Claude divides the material into chapters with short lessons${c.exam ? ' and schedules them up to your exam' : ''}.`, aiButton('gen-plan', 'Make study plan'));
+  }
+  const t = today();
+  const sch = computeSchedule(c);
+  const L = allLessons(c);
+  const undone = L.filter(x => !c.done[x.lesson.id]);
+  const todayL = undone.filter(x => sch.map[x.lesson.id] === t);
+  const examFuture = c.exam && c.exam > t;
+  const pace = examFuture
+    ? `<p class="muted small">${plural(sch.perDay, 'lesson', 'lessons')} a day to finish everything before your exam</p>`
+    : `<label class="muted small">Lessons per day <select data-chg="perday" aria-label="Lessons per day">${[1, 2, 3, 4, 5, 6, 8].map(n => `<option${n === sch.perDay ? ' selected' : ''}>${n}</option>`).join('')}</select></label>`;
+  let todayBody;
+  if (!undone.length) {
+    todayBody = `<p>You have learned all the lessons. Review your flashcards and do a quiz on the whole subject.</p><div class="row"><button class="btn primary" data-act="tab" data-id="cards">Review flashcards</button><button class="btn ghost" data-act="tab" data-id="quiz">Do a quiz</button></div>`;
+  } else if (!todayL.length) {
+    todayBody = `<p>Your lessons for today are done. Feel like carrying on?</p><div class="row"><button class="btn ghost" data-act="open-lesson" data-id="${esc(undone[0].lesson.id)}">Start ${esc(undone[0].lesson.title)}</button></div>`;
+  } else {
+    todayBody = `<ol>${todayL.map(x => `<li><button class="link" data-act="open-lesson" data-id="${esc(x.lesson.id)}">${esc(x.lesson.title)}</button></li>`).join('')}</ol>`;
+    if (sch.doneToday) todayBody += `<p class="muted">Already learned ${plural(sch.doneToday, 'lesson', 'lessons')} today.</p>`;
+  }
+  if (sch.reviewFrom && t >= sch.reviewFrom) todayBody += `<p class="muted">You are in the review days before your exam: do quizzes and review your flashcards.</p>`;
+  const units = c.plan.units.map((u, ui) => {
+    const d = u.lessons.filter(l => c.done[l.id]).length;
+    return `<section class="unit"><div class="unit-head"><h3><span class="num">Chapter ${ui + 1}</span>${esc(u.title)}</h3><span class="muted small">${d} of ${u.lessons.length}</span></div>
+      <ul class="lessons">${u.lessons.map(l => {
+        const done = !!c.done[l.id];
+        const when = done ? 'learned' : (sch.map[l.id] ? relDay(sch.map[l.id]) : '');
+        return `<li><button class="lrow" data-act="open-lesson" data-id="${esc(l.id)}"><span class="dot${done ? ' done' : ''}" aria-hidden="true">${done ? '✓' : ''}</span><span><span class="t">${esc(l.title)}</span>${l.goal ? `<span class="g">${esc(l.goal)}</span>` : ''}</span><span class="d${!done && sch.map[l.id] === t ? ' now' : ''}">${esc(when)}</span></button></li>`;
+      }).join('')}</ul></section>`;
+  }).join('');
+  return `${c.plan.overview ? `<p class="overview">${esc(c.plan.overview)}</p>` : ''}
+    <section class="today index-card"><div class="card-head"><h2>Today</h2>${pace}</div><div class="card-body">${buddy(!undone.length || !todayL.length ? 'cheer' : 'happy', 70, !undone.length ? 'Everything learned! You\'re brilliant.' : !todayL.length ? 'Your lessons for today are done. High paw!' : `Today ${todayL.length === 1 ? '1 lesson is' : `${todayL.length} lessons are`} waiting for you.`)}${todayBody}</div></section>
+    ${units}
+    <p class="muted small plan-foot">Added or removed material? <button class="link" data-act="tab" data-id="material">Make a new plan under Material</button>.</p>`;
+}
+function lessonView(c) {
+  const f = findLesson(S.lessonId);
+  if (!f) { S.lessonId = null; return planPanel(c); }
+  const { unit, lesson, ui } = f;
+  const busyHere = S.busy && S.busy.kind === 'lesson' && S.busy.target === lesson.id;
+  const text = busyHere ? (S.stream ? S.stream.text : '') : S.lessonCache[lesson.id];
+  const done = !!c.done[lesson.id];
+  let body;
+  if (busyHere) body = busyHtml() + `<article id="lesson-body" class="reading">${renderMd(text || '')}</article>`;
+  else if (text) body = `<article id="lesson-body" class="reading">${renderMd(text)}</article>`;
+  else if (c.written[lesson.id] && S.lessonCache[lesson.id] === undefined) body = '<p class="loading">Loading lesson…</p>';
+  else body = `<div class="empty-inline"><p>This lesson hasn't been written yet. Claude writes it from your material.</p>${aiButton('write-lesson', 'Write this lesson')}</div>`;
+  const next = nextLesson(lesson.id);
+  const actions = (text && !busyHere) ? `<div class="lesson-actions">
+      ${done ? `<span class="done-tag">Learned ✓</span><button class="btn ghost small" data-act="toggle-done" data-id="${esc(lesson.id)}">Mark as not learned</button>` : `<button class="btn primary" data-act="toggle-done" data-id="${esc(lesson.id)}">Mark as learned</button>`}
+      ${aiButton('prac-lesson', 'Practise this lesson', 'ghost', lesson.id)}
+      ${next ? `<button class="btn ghost" data-act="open-lesson" data-id="${esc(next.id)}">Next lesson</button>` : ''}
+      ${aiButton('lesson-cards', 'Make flashcards from this lesson', 'ghost')}
+      ${aiButton('write-lesson', 'Rewrite', 'ghost')}
+    </div>` : '';
+  return `<div class="lesson"><button class="btn ghost small back" data-act="close-lesson">Back to plan</button>
+    <p class="kicker">Chapter ${ui + 1}: ${esc(unit.title)}</p>
+    <h2 class="lesson-title"><span class="hl">${esc(lesson.title)}</span></h2>
+    ${lesson.goal ? `<p class="goal">${esc(lesson.goal)}</p>` : ''}
+    ${body}${actions}</div>`;
+}
+function quizPanel(c) {
+  if (S.busy && S.busy.kind === 'quiz') return '';
+  if (!S.chunkList.length) return emptyBlock('No material yet', 'Add material to have quiz questions made.', '<button class="btn primary" data-act="tab" data-id="material">Add material</button>');
+  const q = S.quiz;
+  if (q && !q.finished) {
+    const it = q.qs[q.i]; const pick = q.picks[q.i]; const answered = pick != null;
+    const right = answered && pick === it.answer;
+    return `<div class="quiz"><div class="quiz-top"><span>Question ${q.i + 1} of ${q.qs.length}</span><span class="muted small">${esc(q.label)}</span></div>
+      <div class="bar" aria-hidden="true"><i style="width:${(q.i / q.qs.length) * 100}%"></i></div>
+      <h2 class="question">${esc(it.question)}</h2>
+      <div class="opts">${it.options.map((o, k) => {
+        let cls = '';
+        if (answered) { if (k === it.answer) cls = ' correct'; else if (k === pick) cls = ' wrong'; }
+        return `<button class="opt${cls}" data-act="quiz-pick" data-id="${k}"${answered ? ' disabled' : ''}><span class="k">${'ABCD'[k]}</span><span>${esc(o)}</span></button>`;
+      }).join('')}</div>
+      ${answered ? `<div class="feedback ${right ? 'good' : 'bad'}"><strong>${right ? 'Correct!' : `Not right. The correct answer is ${'ABCD'[it.answer]}.`}</strong> ${esc(it.explanation)} ${srcChip(it.source)}</div>` : '<p class="muted small kbd-tip" style="margin-top:14px">Tip: choose with the keys 1 to 4.</p>'}
+      <div class="actions">${answered ? `<button class="btn primary" data-act="quiz-next">${q.i + 1 < q.qs.length ? 'Next question' : 'See your score'}</button>` : ''}<button class="btn ghost" data-act="quiz-quit">Stop quiz</button></div></div>`;
+  }
+  if (q && q.finished) {
+    const pct = Math.round(q.score / q.qs.length * 100);
+    const wrong = q.qs.map((it, k) => ({ it, k })).filter(x => q.picks[x.k] !== x.it.answer);
+    const verdict = pct >= 80 ? 'Strong work.' : pct >= 55 ? 'A good foundation. Have another look at the questions below.' : 'Read the lessons for this part again, then try once more.';
+    return `<div class="quiz quiz-result">${buddy(pct >= 55 ? 'cheer' : 'sad', 90, pct >= 80 ? 'Super job!' : pct >= 55 ? 'Nice! A bit more practice and you\'ll know it.' : 'No worries! Read the lessons again and try once more.')}<h2>You got ${q.score} of ${q.qs.length} questions right</h2><p class="muted">${esc(q.label)}: ${pct}%. ${verdict}</p>
+      ${wrong.length ? `<h3 style="margin-top:26px">Worth another look</h3><ol class="review-list">${wrong.map(({ it, k }) => `<li><p class="rq">${esc(it.question)}</p><p><span class="bad-t">Your answer:</span> ${esc(it.options[q.picks[k]] ?? '')}</p><p><span class="good-t">Correct:</span> ${esc(it.options[it.answer])}</p><p class="muted">${esc(it.explanation)} ${srcChip(it.source)}</p></li>`).join('')}</ol>` : ''}
+      <div class="actions"><button class="btn primary" data-act="quiz-new">New quiz</button><button class="btn ghost" data-act="quiz-again">Retake this quiz</button></div></div>`;
+  }
+  const hist = c.quizzes.slice(-6).reverse();
+  const savedQs = poolQuizItems('all').length;
+  return `<h2>Test yourself</h2><p class="muted">${S.ai ? 'Claude makes multiple-choice questions from your material. After each question you see why the answer is right and where it comes from.' : 'Quiz yourself with the multiple-choice questions saved in this subject. After each question you see why the answer is right and where it comes from.'}</p>
+    <div class="form-row"><div><label class="f" for="quiz-scope">Topic</label><select id="quiz-scope">${scopeOptions(c)}</select></div>
+    <div><label class="f" for="quiz-n">Number of questions</label><select id="quiz-n"><option>5</option><option selected>10</option><option>15</option></select></div></div>
+    <div class="row">${S.ai ? aiButton('start-quiz', 'Start quiz') : ''}${savedQs >= 3 ? `<button type="button" class="btn ${S.ai ? 'ghost' : 'primary'}" data-act="pool-quiz">Quiz from saved questions</button>` : ''}${c.lastQuiz ? '<button class="btn ghost" data-act="quiz-again">Retake the last quiz</button>' : ''}</div>
+    ${!S.ai && savedQs < 3 && !c.lastQuiz ? '<p class="muted small" style="margin-top:12px">No saved questions yet. Practise this subject in Blokboek in Claude first, then they come along.</p>' : ''}
+    ${hist.length ? `<h3 style="margin-top:34px">Previous quizzes</h3><table class="hist"><thead><tr><th>Date</th><th>Topic</th><th>Score</th></tr></thead><tbody>${hist.map(h => `<tr><td>${esc(fmtShort.format(parseD(h.d)))}</td><td>${esc(h.label)}</td><td>${h.score}/${h.total}</td></tr>`).join('')}</tbody></table>` : ''}`;
+}
+function cardsPanel(c) {
+  const r = S.review;
+  if (r) {
+    if (r.done) {
+      const t = today();
+      const nextDue = S.cards.filter(x => x.due > t).map(x => x.due).sort()[0];
+      return `<div class="review review-done">${buddy('cheer', 90, 'Nicely reviewed! That will stick.')}<h2>Done reviewing</h2><p class="muted">You reviewed ${plural(r.seen.length, 'card', 'cards')}.${nextDue ? ` The next cards come back ${relDayLong(nextDue)}.` : ''}</p><div class="row" style="margin-top:18px"><button class="btn primary" data-act="end-review">Back to flashcards</button></div></div>`;
+    }
+    const card = S.cards.find(x => x.id === r.queue[r.i]);
+    if (!card) { r.i++; if (r.i >= r.queue.length) r.done = true; return cardsPanel(c); }
+    return `<div class="review"><div class="quiz-top"><span>Card ${r.i + 1} of ${r.queue.length}</span><button class="btn ghost small" data-act="end-review">Stop</button></div>
+      <button class="fc${r.flipped ? ' flipped' : ''}" data-act="flip" aria-label="${r.flipped ? 'Answer. Click to see the question.' : 'Question. Click to see the answer.'}">
+        <span class="fc-inner"><span class="fc-face fc-front"><span class="fc-side">Question</span><span class="fc-text">${esc(card.front)}</span></span><span class="fc-face fc-back"><span class="fc-side">Answer</span><span class="fc-text">${esc(card.back)}</span></span></span>
+      </button>
+      <p class="muted center flip-hint"${r.flipped ? ' hidden' : ''}><span class="kbd-tip">Click the card or press space</span><span class="touch-tip">Tap the card</span> to see the answer.</p>
+      <div class="rate"${r.flipped ? '' : ' hidden'}><p class="muted">How well did you know it?</p>
+        <div class="row"><button class="btn ghost" data-act="rate" data-id="again">Again<kbd>1</kbd></button><button class="btn ghost" data-act="rate" data-id="hard">Hard<kbd>2</kbd></button><button class="btn primary" data-act="rate" data-id="good">Good<kbd>3</kbd></button></div>
+        ${card.source && S.chunks.has(card.source) ? `<p class="muted small">Source: ${srcChip(card.source)}</p>` : ''}</div></div>`;
+  }
+  const t = today();
+  const total = S.cards.length, due = S.cards.filter(x => x.due <= t).length, mastered = S.cards.filter(x => x.box >= 4).length;
+  const gen = S.chunkList.length
+    ? `<section class="gen"><h3>Make new cards</h3><p class="muted">Claude makes cards with the most important terms from the part you choose.</p><label class="f" for="cards-scope">Topic</label><select id="cards-scope">${scopeOptions(c)}</select><div class="row">${aiButton('gen-cards', 'Make flashcards')}</div></section>`
+    : `<section class="gen"><p class="muted">Add material first to have flashcards made.</p><div class="row"><button class="btn ghost" data-act="tab" data-id="material">Add material</button></div></section>`;
+  return `<h2>Flashcards</h2>
+    <p class="muted">${total ? `${due ? plural(due, 'card is', 'cards are') + ' ready to review.' : 'You are up to date with reviewing.'} ${plural(total, 'card', 'cards')} in total, ${mastered} mastered.` : 'You have no flashcards yet. Cards you know well come back later and later; cards you find hard come back more often.'}</p>
+    ${total ? `<div class="row" style="margin-top:16px"><button class="btn primary" data-act="start-review"${due ? '' : ' disabled'}>Review ${plural(due, 'card', 'cards')}</button><button class="btn ghost" data-act="practice-all">Practise with all cards</button></div>` : ''}
+    ${gen}
+    ${total ? `<details class="all-cards"${S.cardsOpen ? ' open' : ''}><summary>View all cards (${total})</summary><ul>${S.cards.map(cd => `<li><div><strong>${esc(cd.front)}</strong><p>${esc(cd.back)}</p></div><button class="btn ghost small" data-act="del-card" data-id="${esc(cd.id)}">Delete</button></li>`).join('')}</ul></details>` : ''}`;
+}
+function progressPanel(c) {
+  const t = today();
+  const L = allLessons(c);
+  const done = L.filter(x => c.done[x.lesson.id]).length;
+  const sch = computeSchedule(c);
+  const undone = L.filter(x => !c.done[x.lesson.id]);
+  const lastDate = undone.length ? sch.map[undone[undone.length - 1].lesson.id] : null;
+  const st = streak(c);
+  const lines = [];
+  if (c.plan) lines.push(`You have learned <strong>${done} of ${L.length}</strong> lessons.`);
+  else lines.push('You don\'t have a study plan yet. Make one under Material.');
+  if (lastDate) {
+    const per = plural(sch.perDay, 'lesson', 'lessons');
+    if (c.exam && c.exam > t) {
+      const spare = diffDays(lastDate, c.exam);
+      lines.push(`At ${per} a day you'll be done ${relDayLong(lastDate)}${spare > 0 ? `, ${plural(spare, 'day', 'days')} before your exam` : ''}.`);
+    } else lines.push(`At ${per} a day you'll be done ${relDayLong(lastDate)}.`);
+  } else if (c.plan && L.length) lines.push('All lessons are done. Keep reviewing until your exam.');
+  if (st) lines.push(`You have studied ${plural(st, 'day', 'days')} in a row.`);
+  const xpWeek = Object.entries(c.xp || {}).filter(([d]) => { const n = diffDays(d, t); return n >= 0 && n < 7; }).reduce((a, [, v]) => a + v, 0);
+  if (xpWeek) lines.push(`This week you earned ${xpWeek} XP practising.`);
+  const unitsHtml = c.plan ? `<section><h3>Per chapter</h3><ul class="unit-progress">${c.plan.units.map((u, i) => {
+    const d = u.lessons.filter(l => c.done[l.id]).length; const pct = Math.round(d / u.lessons.length * 100);
+    return `<li><div class="up-head"><span>${i + 1}. ${esc(u.title)}</span><span class="muted">${d}/${u.lessons.length}</span></div><div class="bar" role="img" aria-label="${pct} percent learned"><i style="width:${pct}%"></i></div></li>`;
+  }).join('')}</ul></section>` : '';
+  const qs = c.quizzes.slice(-12);
+  let quizHtml;
+  if (qs.length) {
+    const avgN = Math.min(5, qs.length);
+    const avg = Math.round(qs.slice(-avgN).reduce((a, q) => a + q.score / q.total, 0) / avgN * 100);
+    const byLabel = {};
+    for (const q of c.quizzes) { if (q.scope === 'all') continue; (byLabel[q.label] = byLabel[q.label] || []).push(q.score / q.total); }
+    const weak = Object.entries(byLabel).filter(([, arr]) => { const last = arr.slice(-2); return last.reduce((a, b) => a + b, 0) / last.length < 0.7; }).map(([l]) => l);
+    quizHtml = `<section><h3>Quizscores</h3><div class="qchart" role="img" aria-label="Scores of your last ${qs.length} quizzes">${qs.map(q => { const p = Math.round(q.score / q.total * 100); return `<div class="qbar" title="${esc(fmtShort.format(parseD(q.d)) + ', ' + q.label + ': ' + q.score + '/' + q.total)}"><span>${p}%</span><i style="height:${Math.max(2, p)}%"></i></div>`; }).join('')}</div>
+      <p class="muted small" style="margin-top:10px">Average ${avg}% over your last ${plural(avgN, 'quiz', 'quizzes')}.</p>
+      ${weak.length ? `<p class="small" style="margin-top:8px">Still tricky: ${weak.map(esc).join(', ')}.</p>` : ''}</section>`;
+  } else quizHtml = `<section><h3>Quizscores</h3><p class="muted small" style="margin-top:8px">No quizzes taken yet.</p></section>`;
+  const total = S.cards.length;
+  let cardsHtml = `<section><h3>Flashcards</h3><p class="muted small" style="margin-top:8px">No flashcards yet.</p></section>`;
+  if (total) {
+    const fresh = S.cards.filter(x => !x.seen).length, master = S.cards.filter(x => x.box >= 4).length, learning = total - fresh - master;
+    const w = n => (n / total * 100).toFixed(1);
+    cardsHtml = `<section><h3>Flashcards</h3><div class="stack" role="img" aria-label="${fresh} new, ${learning} learning, ${master} mastered"><i style="width:${w(master)}%;background:var(--good)"></i><i style="width:${w(learning)}%;background:var(--marker-solid)"></i><i style="width:${w(fresh)}%;background:var(--rule)"></i></div>
+      <div class="legend"><span style="--c:var(--good)">${master} mastered</span><span style="--c:var(--marker-solid)">${learning} learning</span><span style="--c:var(--rule)">${fresh} new</span></div></section>`;
+  }
+  return `<h2>Progress</h2><div class="summary">${lines.map(l => `<p>${l}</p>`).join('')}</div>
+    ${albumHtml(c)}
+    <div class="pgrid">${unitsHtml}<div class="stack-col">${quizHtml}${cardsHtml}</div></div>`;
+}
+function fileMeta(f) {
+  if (f.kind === 'pdf') return `PDF, ${plural(f.parts, 'page', 'pages')}`;
+  if (f.kind === 'pptx') return `PowerPoint, ${plural(f.parts, 'slide', 'slides')}`;
+  if (f.kind === 'docx') return `Word, ${f.chars.toLocaleString('en-GB')} characters`;
+  return `Text, ${f.chars.toLocaleString('en-GB')} characters`;
+}
+function materialPanel(c) {
+  return `<h2>Study material</h2>
+    <p class="muted">Add PDFs, PowerPoint presentations (.pptx), Word files (.docx) or text. Your files are read in your browser; only the text is saved.</p>
+    <div class="drop" data-drop><input id="file-input" type="file" multiple accept=".pdf,.pptx,.docx,.txt,.md,.markdown,.csv" hidden>
+      <strong>Drag your files here</strong><span class="muted small">or</span><button class="btn primary" data-act="pick-files">Choose files</button></div>
+    <div id="imports">${importsHtml()}</div>
+    <details class="paste"${S.pasteOpen ? ' open' : ''}><summary>Paste text or notes</summary>
+      <label class="f" for="paste-title">Title</label><input id="paste-title" maxlength="80" placeholder="For example: Notes lecture 3">
+      <label class="f" for="paste-text">Text</label><textarea id="paste-text" rows="8"></textarea>
+      <button class="btn ghost" data-act="add-paste">Add text</button></details>
+    ${c.files.length ? `<h3>Added</h3><ul class="files">${c.files.map(f => `<li><div><strong>${esc(f.name)}</strong><span class="muted">${esc(fileMeta(f))}</span></div><button class="btn ghost small" data-act="remove-file" data-id="${esc(f.id)}">Delete</button></li>`).join('')}</ul>
+      <div class="cta-box">${c.plan
+        ? `<p>Added or removed material? Make a new plan so the lessons match again.</p>${aiButton('gen-plan', 'Make new study plan', 'ghost')}`
+        : `<p>Added everything? Let Claude make a study plan from it.</p>${aiButton('gen-plan', 'Make study plan')}`}</div>` : ''}
+    <p class="muted small">Scanned PDFs made only of images, and audio recordings, can't be read. Save old .ppt and .doc files as .pptx or .docx first.</p>`;
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-act]');
+  if (!el || el.disabled) return;
+  const act = el.dataset.act, id = el.dataset.id;
+  switch (act) {
+    case 'new-course': newCourseDlg(); break;
+    case 'open-course': if (id !== S.cid) openCourse(id); break;
+    case 'tab':
+      if (id === 'plan' && S.tab === 'plan') S.lessonId = null;
+      S.tab = id; renderMain(); break;
+    case 'settings': settingsDlg(); break;
+    case 'gen-plan': generatePlan(); break;
+    case 'open-lesson': openLesson(id); break;
+    case 'close-lesson': S.lessonId = null; renderMain(); break;
+    case 'write-lesson': if (S.lessonId) writeLesson(S.lessonId, !!S.lessonCache[S.lessonId]); break;
+    case 'toggle-done': {
+      const c = S.course;
+      if (c.done[id]) delete c.done[id];
+      else { c.done[id] = today(); markActivity(); toast('Lesson marked as learned.'); setTimeout(() => checkStickers({}), 300); }
+      saveCourse(); renderMain(); break;
+    }
+    case 'lesson-cards': if (S.lessonId) genCards('les:' + S.lessonId); break;
+    case 'src': showSource(id); break;
+    case 'stop': if (S.busy) S.busy.ctl.abort(); break;
+    case 'start-quiz': startQuiz(); break;
+    case 'quiz-pick': quizPick(Number(id)); break;
+    case 'quiz-next': quizNext(); break;
+    case 'quiz-quit': case 'quiz-new': S.quiz = null; renderMain(); break;
+    case 'quiz-again': quizAgain(); break;
+    case 'pool-quiz': startPoolQuiz(); break;
+    case 'start-review': startReview(false); break;
+    case 'practice-all': startReview(true); break;
+    case 'flip': flip(); break;
+    case 'rate': rate(id); break;
+    case 'end-review': S.review = null; renderMain(); break;
+    case 'gen-cards': genCards(($('#cards-scope') || {}).value || 'all'); break;
+    case 'del-card': S.cards = S.cards.filter(x => x.id !== id); saveCards(); renderMain(); break;
+    case 'pick-files': { const inp = $('#file-input'); if (inp) inp.click(); break; }
+    case 'add-paste': {
+      const text = ($('#paste-text') || {}).value || '';
+      const title = (($('#paste-title') || {}).value || '').trim() || 'Aantekeningen';
+      if (text.trim().length < 20) { toast('Paste a bit more text first.'); break; }
+      try {
+        addMaterial(title, 'text', sectionsFromText(text)).then(() => { toast('Text added.'); renderMain(); }).catch(err => toast(err.message, true));
+      } catch (err) { toast(err.message, true); }
+      break;
+    }
+    case 'remove-file': removeFile(id); break;
+    case 'dismiss-import': S.importing = S.importing.filter(x => x.key !== id); paintImports(); break;
+    case 'prac-all': startPractice('all'); break;
+    case 'prac-unit': startPractice('unit:' + id); break;
+    case 'prac-lesson': startPractice('les:' + id); break;
+    case 'prac-mistakes': startMistakes(); break;
+    case 'prac-again': { const sc = S.prac ? S.prac.scope : 'all'; const fromPool = S.prac && S.prac.fromPool; S.prac = null; if (sc === 'mistakes') startMistakes(); else if (fromPool) startPoolPractice(sc); else startPractice(sc); break; }
+    case 'prac-pool': startPoolPractice(id); break;
+    case 'inbox-add': addInbox(id); break;
+    case 'inbox-later': S.inbox = S.inbox.filter(x => x.id !== id); renderMain(); break;
+    case 'offline': offlineDlg(); break;
+    case 'prep-offline': { const d = el.closest('dialog'); if (d) d.close(); prepareOffline(); break; }
+    case 'dl-offline': downloadOffline(); break;
+    case 'export-data': exportProgress(); break;
+    case 'import-data': { if (S.busy) { toast('Claude is still busy. Wait a moment or click Stop.'); break; } const d = el.closest('dialog'); if (d) d.close(); const inp = $('#import-input'); if (inp) inp.click(); break; }
+    case 'prac-close': S.prac = null; S.tab = 'practice'; renderAll(); break;
+    case 'prac-quit': quitPractice(); break;
+    case 'px-check': pxCheck(false); break;
+    case 'px-skip': pxCheck(true); break;
+    case 'px-next': pxNext(); break;
+    case 'px-choice': case 'px-tf': case 'px-gap': case 'px-gap-clear': case 'px-order-add': case 'px-order-del':
+    case 'px-match': case 'px-sort-pick': case 'px-sort-bin': pxTap(act, id); break;
+    case 'sound': Sound.toggle(); if (Sound.on) Sound.play('tick'); renderMain(); break;
+  }
+});
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.id === 'file-input') { handleFiles(t.files); t.value = ''; return; }
+  if (t.id === 'import-input') { const f = t.files && t.files[0]; t.value = ''; handleImport(f); return; }
+  if (t.dataset && t.dataset.chg === 'perday' && S.course) { S.course.perDay = Number(t.value) || 3; saveCourse(); renderMain(); }
+  if (t.dataset && t.dataset.chg === 'goal' && S.course) { S.course.goal = Number(t.value) || 30; saveCourse(); renderMain(); }
+});
+document.addEventListener('toggle', e => {
+  const t = e.target;
+  if (!t || !t.classList) return;
+  if (t.classList.contains('paste')) S.pasteOpen = t.open;
+  if (t.classList.contains('all-cards')) S.cardsOpen = t.open;
+}, true);
+window.addEventListener('dragover', e => {
+  if (!e.dataTransfer || ![...e.dataTransfer.types].includes('Files')) return;
+  e.preventDefault();
+  const z = e.target.closest && e.target.closest('[data-drop]');
+  document.querySelectorAll('[data-drop]').forEach(d => d.classList.toggle('over', d === z));
+});
+window.addEventListener('dragleave', e => {
+  if (!e.relatedTarget) document.querySelectorAll('[data-drop]').forEach(d => d.classList.remove('over'));
+});
+window.addEventListener('drop', e => {
+  if (!e.dataTransfer || !e.dataTransfer.files.length) return;
+  e.preventDefault();
+  document.querySelectorAll('[data-drop]').forEach(d => d.classList.remove('over'));
+  const z = e.target.closest && e.target.closest('[data-drop]');
+  if (z) handleFiles(e.dataTransfer.files);
+  else if (S.course) { S.tab = 'material'; renderMain(); handleFiles(e.dataTransfer.files); }
+});
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  const tgt = e.target;
+  const onButton = tgt.closest && tgt.closest('button');
+  if (S.prac && S.course && !S.prac.done) {
+    const s = S.prac;
+    if (tgt.id === 'type-ans') { if (e.key === 'Enter') { e.preventDefault(); pxCheck(false); } return; }
+    if (tgt.closest && tgt.closest('input, textarea, select, dialog')) return;
+    if (e.key === 'Enter' && !onButton) {
+      e.preventDefault();
+      if (s.phase === 'feedback') pxNext();
+      else if (s.pos < s.queue.length && s.ui && pxCanCheck(s.queue[s.pos], s.ui)) pxCheck(false);
+      return;
+    }
+    if (s.phase !== 'answer' || s.pos >= s.queue.length || !s.ui) return;
+    const n = '123456789'.indexOf(e.key);
+    if (n < 0) return;
+    const ex = s.queue[s.pos];
+    if (ex.type === 'choice' && n < ex.options.length) pxTap('px-choice', String(n));
+    else if (ex.type === 'truefalse' && n < 2) pxTap('px-tf', n === 0 ? 'true' : 'false');
+    else if (ex.type === 'gap' && n < s.ui.tiles.length) pxTap('px-gap', String(n));
+    else if (ex.type === 'order') { const avail = s.ui.tiles.map((t, k) => k).filter(k => !s.ui.line.includes(k)); if (n < avail.length) pxTap('px-order-add', String(avail[n])); }
+    return;
+  }
+  if (tgt.closest && tgt.closest('input, textarea, select, dialog')) return;
+  if (S.tab === 'cards' && S.review && !S.review.done) {
+    if ((e.key === ' ' || e.key === 'Enter') && !onButton) { e.preventDefault(); flip(); }
+    else if (S.review.flipped && ['1', '2', '3'].includes(e.key)) { e.preventDefault(); rate(['again', 'hard', 'good'][Number(e.key) - 1]); }
+  } else if (S.tab === 'quiz' && S.quiz && !S.quiz.finished) {
+    const q = S.quiz;
+    const k = '1234'.indexOf(e.key);
+    if (q.picks[q.i] == null && k >= 0) { e.preventDefault(); quizPick(k); }
+    else if (q.picks[q.i] != null && e.key === 'Enter' && !onButton) { e.preventDefault(); quizNext(); }
+  }
+});
+
+/* ---------- start ---------- */
+async function init() {
+  renderAll();
+  await Store.init();
+  try {
+    const idx = await Store.get('index');
+    S.courses = (idx && Array.isArray(idx.courses)) ? idx.courses : [];
+  } catch (e) {
+    S.courses = [];
+    toast('Your subjects could not be loaded. Refresh the page.', true);
+  }
+  if (Store.mode !== 'db') { try { await applySeed(); } catch (e) { /* ignore */ } }
+  else { try { await loadInbox(); } catch (e) { S.inbox = []; } }
+  S.ready = true;
+  let last = null;
+  try { last = localStorage.getItem('blokboek-last'); } catch (e) { /* ignore */ }
+  const pick = S.courses.find(x => x.id === last) || S.courses[0];
+  if (pick) openCourse(pick.id); else renderAll();
+}
+init();
+})();
+</script>
+<script id="bb-boot">
+(function () {
+  if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+  }
+  if (navigator.storage && navigator.storage.persist) { navigator.storage.persist().catch(function () {}); }
+  var tip = document.getElementById('install-tip');
+  var ios = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var standalone = window.navigator.standalone === true || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+  var dismissed = false;
+  try { dismissed = localStorage.getItem('blokboek-install-tip') === 'done'; } catch (e) {}
+  if (tip && ios && !standalone && !dismissed) tip.hidden = false;
+  var close = document.getElementById('install-tip-close');
+  if (close) close.addEventListener('click', function () {
+    tip.hidden = true;
+    try { localStorage.setItem('blokboek-install-tip', 'done'); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>
